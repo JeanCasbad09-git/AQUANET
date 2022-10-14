@@ -25,7 +25,7 @@ public class loginController {
 	public String verLogin(ModelMap model) {
 		Usuario usu = new Usuario();
 		usu = usuInt.listado();
-		
+		/*PRUEBA COMMIT*/
 		model.addAttribute("mensaje",usu.getVC_USER() + "-"+usu.getVC_PASSWORD() + "-"+ usu.getIN_ID_USUARIO());
 		return "login";
 	}
