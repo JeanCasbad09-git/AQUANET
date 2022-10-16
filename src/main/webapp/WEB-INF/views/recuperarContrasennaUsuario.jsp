@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<meta charset="ISO-8859-1">
+<title>Recuperar Contraseña</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
 <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
@@ -26,26 +26,32 @@
               <div class="card-body p-4 p-lg-5 text-black">
                 <form>
 
-                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Iniciar sesión con su cuenta</h5>
+                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Recuperar Contraseña</h5>
+					
+					
+					<div class="form-outline mb-4">
+                    <input type="text" class="form-control form-control-lg" id="txtNombre"/>
+                    <label class="form-label" for="form2Example17">Nombre Completo</label>
+                  </div>
 
+                  <div class="form-outline mb-4">
+                    <input type="text" class="form-control form-control-lg" id="txtDNI" maxlength="8"/>
+                    <label class="form-label" for="form2Example27">DNI</label>
+                  </div>
+					
                   <div class="form-outline mb-4">
                     <input type="text" class="form-control form-control-lg" id="txtUsuario"/>
                     <label class="form-label" for="form2Example17">Usuario</label>
                   </div>
-
-                  <div class="form-outline mb-4">
-                    <input type="password" class="form-control form-control-lg" id="txtContrasenna"/>
-                    <label class="form-label" for="form2Example27">Contraseña</label>
-                  </div>
-
-                  <div class="pt-1 mb-4">
-                    <button class="btn btn-dark btn-lg btn-block" type="button" onclick="grabar();">Ingresar</button>
-                  </div>
-
-                  <a class="small text-muted" href="http://localhost:8080/AQUANET/home/contrasenna">¿Olvidaste tu contraseña?</a>
-                  <p class="mb-5 pb-lg-2" style="color: #393f81;">¿No tienes una cuenta? <a href="http://localhost:8080/AQUANET/home/usuario"
-                      style="color: #393f81;">Registrate aquí</a></p>
-                  <a href="#!" class="small text-muted">Terminos de uso</a>
+					
+                  <div class="form-row">
+            
+               <button class="btn btn-dark" type="button" onclick="grabar();">Recuperar</button>
+               <button type="button" class="btn btn-info" onclick="limpiar();" style="color:white;">Limpiar</button>
+               <button type="button" class="btn btn-danger" onclick="location.href='http://localhost:8080/AQUANET/home/index'" style="color:white;">Regresar</button>
+            
+            </div>
+            	<a href="#!" class="small text-muted">Terminos de uso</a>
                   <a href="#!" class="small text-muted">Politicas de privacidad</a>
                 </form>
 
@@ -58,38 +64,58 @@
   </div>
 </section>
 <script type="text/javascript">
+function limpiar(){
+	$("#txtNombre").val('');
+	$("#txtDNI").val('');
+	$("#txtUsuario").val('');
+	$("#txtContrasenna").val('');
+ }
+
 function grabar(){ 
-    var user = $("#txtUsuario").val();
-    var password = $("#txtContrasenna").val();
-    
-    
+	var nombre = $("#txtNombre").val().trim();
+    var dni = $("#txtDNI").val().trim();
+    var user = $("#txtUsuario").val().trim();
+
+    if(nombre != "" && nombre!=null){
+    	if(nombre.match("^[a-zA-Z ]+$")){
+        if(dni != "" && dni!=null){
+        	if(dni.match("[0-9]{8,9}")){
     if(user != "" && user!=null){
-        if(password != "" && password!=null){
+        
           $.ajax({
         type: 'POST',
-          url: "verificarLogin",
-          data: {"user":user,"password":password},
+          url: "recuperarContrasenna",
+          data: {"nombre":nombre,"dni":dni,"user":user},
           success: function(data){
-        	  if(data == "BIENVENIDO"){
-        	  	window.location.href = 'http://localhost:8080/AQUANET/home/principal';
-        	  }
-        	  else{
-        		alertaErrorPersonalizada(data);
-        	  }
+        	  if(data != "USUARIO NO EXISTE" && data != "NOMBRE Y/O DNI NO EXISTEN"){
+        		  alertaSuccesPersonalizada("SU CONTRASEÑA ES: " + data);
+          	  }
+          	  else{
+          		alertaErrorPersonalizada(data);
+          	  }
           },
           error: function(){
         	  alertaErrorPersonalizada("ERROR");
           }
           }); 
         	
-        }else{
-        	alertaInfoPersonalizada("Ingrese su contraseña");
-        }
     }else{
     	alertaInfoPersonalizada("Ingrese su usuario");
     }
-    
+        	}else{
+        		alertaErrorPersonalizada("Formato de DNI no valido (8 digitos)");
+        	}
+        }else{
+        	alertaInfoPersonalizada("Ingrese su dni");
+        }
+    }else{
+    	alertaErrorPersonalizada("Formato de nombre no valido");
+    }
+    }else{
+    	alertaInfoPersonalizada("Ingrese su nombre");
+    }
 }
+
 function alertaInfoPersonalizada(mensaje){
 	Swal.fire({
   	  position: 'center',
@@ -106,7 +132,7 @@ function alertaSuccesPersonalizada(mensaje){
   	  icon: 'success',
   	  title: mensaje,
   	  showConfirmButton: false,
-  	  timer: 1500
+  	  timer: 3000
   	})
 }
 

@@ -1,5 +1,7 @@
 package dao;
 
+import interfaces.PersonaInterface;
+import interfaces.Solicitud_ServicioInterface;
 import interfaces.UsuarioInterface;
 
 public abstract class DAOFactory {
@@ -12,7 +14,8 @@ public abstract class DAOFactory {
 	
 	//MÉTODO PARA ACCEDER A LAS INTERFAES 
 	public abstract UsuarioInterface getUsuarioInterface();
-
+	public abstract PersonaInterface getPersonaInterface();
+	public abstract Solicitud_ServicioInterface getSolicitud_ServicioInterface();
 	//MÉTODO QUE GENERA LOS GET DE LAS BD
 	public static DAOFactory getDAOFactory(int db) {
 		switch(db) {
