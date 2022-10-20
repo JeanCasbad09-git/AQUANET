@@ -1,5 +1,6 @@
 package dao;
 
+import interfaces.CortesMantenimientoInterface;
 import interfaces.PersonaInterface;
 import interfaces.Solicitud_ServicioInterface;
 import interfaces.UsuarioInterface;
@@ -22,6 +23,12 @@ public class MySQLDAOFactory extends DAOFactory{
 	public Solicitud_ServicioInterface getSolicitud_ServicioInterface() {
 		// TODO Auto-generated method stub
 		return new Solicitud_ServicioDAO();
+	}
+
+	@Override
+	public CortesMantenimientoInterface getCortesMantenimientoInterface() {
+
+		return new CortesMantenimientoDAO();
 	}
 
 	
