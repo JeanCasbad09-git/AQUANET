@@ -117,7 +117,7 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 					+ ", VC_DEPARTAMENTO as Departamento, VC_COMENTARIO as Comentario, DT_FECHA as FechaCorte from cortexmantenimiento WHERE VC_DISTRITO LIKE '%?%' OR "
 					+ "VC_DEPARTAMENTO LIKE '%?%' OR VC_PROVINCIA LIKE '%?%'";*/
 			String sql= "Select IN_ID_CORTXMAN as ID, VC_DISTRITO as Distrito, VC_PROVINCIA as Provincia"
-					+ ", VC_DEPARTAMENTO as Departamento, VC_COMENTARIO as Comentario, DT_FECHA as FechaCorte from cortexmantenimiento";
+					+ ", VC_DEPARTAMENTO as Departamento, VC_COMENTARIO as Comentario, DT_FECHA as FechaCorte from cortexmantenimiento ORDER BY DT_FECHA desc";
 			pstm=cn.prepareStatement(sql);
 			rs=pstm.executeQuery();
 			CortesMantenimiento obj = new CortesMantenimiento();
@@ -147,7 +147,7 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 
 	@Override
 	public CortesMantenimiento getCorteById(int IN_ID_CORTXMAN) {
-		CortesMantenimiento dis= new CortesMantenimiento();
+		CortesMantenimiento cor= new CortesMantenimiento();
 		Conexion conexion = new Conexion();
 		Connection cn = null;
 		PreparedStatement pstm=null;
@@ -161,13 +161,13 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 			rs=pstm.executeQuery();
 			
 			while(rs.next()) {
-				dis=new CortesMantenimiento();
-				dis.setIN_ID_CORTXMAN(rs.getInt(1));
-				dis.setVC_DISTRITO(rs.getString(2));
-				dis.setVC_PROVINCIA(rs.getString(3));
-				dis.setVC_DEPARTAMENTO(rs.getString(4));
-				dis.setVC_COMENTARIO(rs.getString(4));
-				dis.setDT_FECHA(rs.getDate(6));
+				cor=new CortesMantenimiento();
+				cor.setIN_ID_CORTXMAN(rs.getInt(1));
+				cor.setVC_DISTRITO(rs.getString(2));
+				cor.setVC_PROVINCIA(rs.getString(3));
+				cor.setVC_DEPARTAMENTO(rs.getString(4));
+				cor.setVC_COMENTARIO(rs.getString(4));
+				cor.setDT_FECHA(rs.getDate(6));
 			}
 		}catch(Exception e) {
 			System.out.println("ERROR EN BUSCAR: "+e.getMessage());
@@ -180,6 +180,6 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 				e.printStackTrace();
 			}
 		}
-		return dis;
+		return cor;
 	}
 }

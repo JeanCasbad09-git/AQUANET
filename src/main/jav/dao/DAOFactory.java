@@ -2,6 +2,7 @@ package dao;
 
 import interfaces.CortesMantenimientoInterface;
 import interfaces.PersonaInterface;
+import interfaces.ReclamosInterface;
 import interfaces.Solicitud_ServicioInterface;
 import interfaces.UsuarioInterface;
 
@@ -18,6 +19,7 @@ public abstract class DAOFactory {
 	public abstract PersonaInterface getPersonaInterface();
 	public abstract Solicitud_ServicioInterface getSolicitud_ServicioInterface();
 	public abstract CortesMantenimientoInterface getCortesMantenimientoInterface();
+	public abstract ReclamosInterface getReclamosInterface();
 	//MÉTODO QUE GENERA LOS GET DE LAS BD
 	public static DAOFactory getDAOFactory(int db) {
 		switch(db) {
