@@ -1,10 +1,12 @@
 package dao;
 
+import interfaces.AsignacionCisternaInterfaces;
 import interfaces.CortesMantenimientoInterface;
 import interfaces.PersonaInterface;
 import interfaces.ReclamosInterface;
 import interfaces.Solicitud_ServicioInterface;
 import interfaces.UsuarioInterface;
+import interfaces.UtilidadesInterfaces;
 
 public class MySQLDAOFactory extends DAOFactory{
 
@@ -37,7 +39,19 @@ public class MySQLDAOFactory extends DAOFactory{
 		// TODO Auto-generated method stub
 		return new ReclamosDAO();
 	}
+	@Override
+	public UtilidadesInterfaces getUtilidadesInterface() {
 
+		return new UtilidadesDAO();
+	}
+	
+	@Override
+	public AsignacionCisternaInterfaces getAsignacionCisternaInterfaces() {
+
+		return new AsignacionCisternaDAO();
+	}
+
+}
 	
 
 }
