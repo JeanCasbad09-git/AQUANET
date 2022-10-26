@@ -5,6 +5,7 @@ import interfaces.CocheCisternaInterfaces;
 import interfaces.CortesMantenimientoInterface;
 import interfaces.PersonaInterface;
 import interfaces.ReclamosInterface;
+import interfaces.SedeInterface;
 import interfaces.Solicitud_ServicioInterface;
 import interfaces.TrabajadorInterfaces;
 import interfaces.UsuarioInterface;
@@ -62,6 +63,11 @@ public class MySQLDAOFactory extends DAOFactory{
 	public CocheCisternaInterfaces getCisternaInterfaces() {
 
 		return new CisternaDAO();
+	}
+
+	@Override
+	public SedeInterface getSedeInterface() {
+		return new SedeDAO();
 	}
 
 
