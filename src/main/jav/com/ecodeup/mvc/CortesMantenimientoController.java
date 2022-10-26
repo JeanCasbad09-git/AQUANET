@@ -37,7 +37,13 @@ public class CortesMantenimientoController {
 	}
 	
 	@RequestMapping(value="/crear", method=RequestMethod.GET)
-	public String createCortesMantenimiento() {
+	public String mostrarcreateCortesMantenimiento() {
+		return "registraCortesMantenimiento";
+	}
+	
+	@RequestMapping(value="/crear", method=RequestMethod.POST)
+	public String createCortesMantenimiento(@ModelAttribute("corte") CortesMantenimiento cortes) {
+		corManInt.createCorte_Mantenimiento(cortes);
 		return "registraCortesMantenimiento";
 	}
 	
@@ -63,8 +69,7 @@ public class CortesMantenimientoController {
 	}
 	@PostMapping("/cortes/editar/{id}")
 	public String EditCortesMantenimiento(@PathVariable("id") int id, @ModelAttribute("cortes") CortesMantenimiento corte) {
-		
-		
+			
 		return "redirect:/cortes";
 	}
 	

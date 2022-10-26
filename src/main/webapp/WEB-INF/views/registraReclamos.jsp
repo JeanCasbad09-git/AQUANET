@@ -36,8 +36,22 @@
             </div>
                 </form>
         </div>
+    <script type="text/javascript">
+		<% String msg = ""; 
+			if (request.getAttribute("message") != null) {
+				msg = (String) request.getAttribute("message");
+			}
+		%>
+		const message = "<%=msg%>";
+		if (message && message !== "") {
+			Swal.fire({
+           	  position: 'center',
+           	  icon: 'error',
+           	  title: message,
+           	  showConfirmButton: false,
+           	  timer: 1500
+           	})         	
+	}
+	</script>
 </body>
-<script type="text/javascript">
-
-</script>
 </html>

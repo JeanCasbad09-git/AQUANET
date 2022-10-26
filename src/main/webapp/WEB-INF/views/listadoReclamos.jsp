@@ -49,8 +49,8 @@
                     <td><%=rec.getUsuarioCreador() %></td>
                     <td><%=rec.getVC_ESTADO() %></td>
                     <td><%=rec.getDT_FECHA() %></td>
-                    <td ><a class="btn btn-danger btn-sm" value="ELIMINAR" href=<%="/AQUANET/reclamos/eliminar/"+rec.getIN_ID_RECLAMO() +"" %> style='color:white; font-weight: bold;'>ELIMINAR</a></td>
-                    <td ><a class="btn btn-warning btn-sm" value="ACTUALIZAR" href=<%="/AQUANET/reclamos/visualizar/"+rec.getIN_ID_RECLAMO() +"" %> style='color:white; font-weight: bold;'>VISUALIZAR</a></td>
+                     <td ><a class="btn btn-danger btn-sm" value="ELIMINAR" id="eliminar" onclick=<%="eliminar("+rec.getIN_ID_RECLAMO()+")"%> style='color:white; font-weight: bold;'>ELIMINAR</a></td>
+                    <td ><a class="btn btn-warning btn-sm" value="ACTUALIZAR" href=<%="/AQUANET/reclamos/visualizar/"+rec.getIN_ID_RECLAMO() +"" %> style='color:white; font-weight: bold;'>VISUALIZAR RECLAMO</a></td>
                     </tr>
                 <%} %>
                 </tbody>
@@ -60,4 +60,32 @@
 
         </div>
 </body>
+<script type="text/javascript">
+async function eliminar(pCodRec){
+	const alertResponse = await Swal.fire({position: 'center',
+		  title: "ELIMINAR RECLAMO?",
+		  showDenyButton: true,
+		  confirmButtonText: 'SI',
+		  denyButtonText: 'NO',
+	});
+	
+	if (alertResponse.isConfirmed) {
+		const response = await fetch('/AQUANET/reclamos/eliminar/' + pCodRec);
+		if (response.ok) {
+			const { isConfirmed } = await Swal.fire({
+        		position: 'center',
+        		icon: 'success',
+      		  	title: "ELIMINACION EXITOSA",
+      		  	showDenyButton: false,
+      		  	confirmButtonText: 'OK'
+      	
+      		});
+			if (isConfirmed) location.href="/AQUANET/reclamos/listado";
+		} else {
+			alertaErrorPersonalizada("ERROR");
+		}
+	}
+}
+
+</script>
 </html>

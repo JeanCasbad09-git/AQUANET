@@ -1,6 +1,5 @@
 package dao;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -30,14 +28,12 @@ public class ReclamosDAO implements ReclamosInterface{
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-			cn = conexion.conectar();			
-			String sql = "insert into Reclamos(IN_ID_USUARIO,VC_ESTADO,VC_RECLAMO,DT_FECHA)"
+			cn = conexion.conectar();
+			String sql="";
+			sql = "insert into Reclamos(IN_ID_USUARIO,VC_ESTADO,VC_RECLAMO,DT_FECHA)"
 					+ " values (2,'PEN',?,now())";
 			pstm=cn.prepareStatement(sql);
-			//pstm.setInt(1, obj.getIN_ID_USUARIO());
-			//pstm.setString(2, obj.getVC_ESTADO());
 			pstm.setString(1, obj.getVC_RECLAMO());
-			//pstm.setDate(4, obj.getDT_FECHA());
 			pstm.execute();
 		} catch (Exception e) {
 			System.out.println("ERROR AL REGISTRAR :"+e.getMessage());
@@ -90,7 +86,7 @@ public class ReclamosDAO implements ReclamosInterface{
 		ResultSet rs = null;
 		try {
 			cn = conexion.conectar();			
-			String sql = "update Reclamos set VC_RECLAMO = ?  where IN_ID_RECLAMO = ?";
+			String sql = "update Reclamos set VC_RECLAMO = ?  where IN_ID_RECLAMO = ? ";
 			pstm=cn.prepareStatement(sql);
 			pstm.setString(1, obj.getVC_RECLAMO());
 			pstm.execute();

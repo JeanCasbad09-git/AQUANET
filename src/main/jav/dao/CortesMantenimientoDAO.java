@@ -30,6 +30,7 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 			pstm.setString(3, obj.getVC_DEPARTAMENTO());
 			pstm.setString(4, obj.getVC_COMENTARIO());
 			pstm.setDate(5, (Date) obj.getDT_FECHA());
+			pstm.execute();
 		} catch (Exception e) {
 			System.out.println("ERROR AL REGISTRAR: "+e.getMessage());
 		}finally {
@@ -62,6 +63,7 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 			pstm.setString(3, obj.getVC_DEPARTAMENTO());
 			pstm.setString(4, obj.getVC_COMENTARIO());
 			pstm.setDate(5, obj.getDT_FECHA());
+			pstm.execute();
 		} catch (Exception e) {
 			System.out.println("ERROR AL ACTUALIZAR: "+e.getMessage());
 		}finally {
@@ -89,6 +91,7 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 			String sql = "DELETE FROM cortexmantenimiento where in_id_cortxman=?;";
 			pstm=cn.prepareStatement(sql);
 			pstm.setInt(1, IN_ID_CORTXMAN);
+			pstm.execute();
 
 		} catch (Exception e) {
 			System.out.println("ERROR AL ELIMINAR: "+e.getMessage());
@@ -113,9 +116,6 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 		ResultSet rs = null;
 		try {
 			cn = conexion.conectar();
-			/*String sql= "Select IN_ID_CORTXMAN as ID, VC_DISTRITO as Distrito, VC_PROVINCIA as Provincia"
-					+ ", VC_DEPARTAMENTO as Departamento, VC_COMENTARIO as Comentario, DT_FECHA as FechaCorte from cortexmantenimiento WHERE VC_DISTRITO LIKE '%?%' OR "
-					+ "VC_DEPARTAMENTO LIKE '%?%' OR VC_PROVINCIA LIKE '%?%'";*/
 			String sql= "Select IN_ID_CORTXMAN as ID, VC_DISTRITO as Distrito, VC_PROVINCIA as Provincia"
 					+ ", VC_DEPARTAMENTO as Departamento, VC_COMENTARIO as Comentario, DT_FECHA as FechaCorte from cortexmantenimiento ORDER BY DT_FECHA desc";
 			pstm=cn.prepareStatement(sql);

@@ -1,14 +1,9 @@
 package com.ecodeup.mvc;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dao.DAOFactory;
 import entities.Reclamos;
@@ -41,13 +38,18 @@ public class ReclamosController {
 	}
 	
 	@RequestMapping(value="/crear", method=RequestMethod.GET)
-	public String mostrarCreateReclamos() {		
+	public String mostrarCreateReclamos(Model model, @RequestParam(required = false) String errorMessage) {
+		model.addAttribute("message", errorMessage);
 		return "registraReclamos";
 	}
 	
 	
 	@RequestMapping(value="/crear", method=RequestMethod.POST)
-	public String createReclamos(@ModelAttribute("reclamo") Reclamos reclamo ) {
+	public String createReclamos(@ModelAttribute("reclamo") Reclamos reclamo) {
+		if (reclamo.getVC_RECLAMO().isEmpty()) {
+			return "redirect:/reclamos/crear?errorMessage=" + "No se puede crear un reclamo vacio";	
+		}
+		
 		reInt.createReclamos(reclamo);
 		return "redirect:/reclamos/listado";
 	}

@@ -17,8 +17,9 @@
                     <br>
                 <h1 class="text-center - text-success">VISTA RECLAMO</h1>
                 <br>
-                <form>
-                    <table>
+                <form >
+                <center>
+                    <table  >
                         <%
                 Reclamos rec=(Reclamos)request.getAttribute("reclamos");
                 %>
@@ -56,6 +57,7 @@
                 </tr>
 
                     </table>
+                    </center>
                     <br>
                     <div class="form-row">
             <center>
