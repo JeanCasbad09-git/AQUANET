@@ -22,12 +22,12 @@ public class AsignacionCisternaDAO implements AsignacionCisternaInterfaces{
 		ResultSet rs = null;
 		try {
 			cn= conexion.conectar();
-			String sql = "insert into ASIGNACION_CISTERNA VALUES(NULL,?,?,?,?,CURRENT_CATE(),?,?,?);";
+			String sql = "insert into ASIGNACION_CISTERNA VALUES(NULL,?,?,?,?,CURRENT_DATE(),?,?,?);";
 			ps = cn.prepareStatement(sql);
 		    ps.setInt(1, obj.getIN_ID_CISTERNA());
 		    ps.setInt(2, obj.getIN_ID_CHOFER());
 		    ps.setInt(3, obj.getIN_ID_AGUATERO());
-		    ps.setDate(4, (Date) obj.getDT_FEC_ASIGNADO());
+		    ps.setString(4, obj.getDT_FEC_ASIGNADO());
 		    ps.setString(5, obj.getVC_PARADA_1());
 		    ps.setString(6, obj.getVC_PARADA_2());
 		    ps.setString(7, obj.getVC_PARADA_3());

@@ -13,7 +13,7 @@ import interfaces.UtilidadesInterfaces;
 public class UtilidadesDAO implements UtilidadesInterfaces{
 
 	@Override
-	public List<Cargos> listaCargos() {
+	public List<Cargos> listaCargos(String query) {
 		ArrayList<Cargos> list = new ArrayList<Cargos>();
 		Conexion conexion = new Conexion();
 		Connection cn = null;
@@ -35,9 +35,9 @@ public class UtilidadesDAO implements UtilidadesInterfaces{
 			e.printStackTrace();
 		}finally{
 			try {
+				if(cn!=null)cn.close();
 				if(pstm!=null)pstm.close();
 				if(rs!=null)rs.close();
-				if(cn!=null)cn.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
