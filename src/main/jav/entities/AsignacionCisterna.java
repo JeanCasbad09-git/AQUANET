@@ -18,4 +18,8 @@ public class AsignacionCisterna {
 	private String VC_PARADA_1;
 	private String VC_PARADA_2;
 	private String VC_PARADA_3;
+	
+
+	private Trabajador trabajador = new Trabajador();
+	private Cisterna cisterna = new Cisterna();
 }

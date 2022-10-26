@@ -24,7 +24,7 @@ import interfaces.TrabajadorInterfaces;
 import interfaces.UtilidadesInterfaces;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/cisterna")
 public class CrudCisternaController {
 
 	DAOFactory daoFactory=DAOFactory.getDAOFactory(DAOFactory.MYSQL8);
@@ -37,7 +37,7 @@ public class CrudCisternaController {
 	
 	
 	@RequestMapping(value="/CrudCisterna",method=RequestMethod.GET)
-	public String verDolar(ModelMap model) {
+	public String verCRUDCisterna(ModelMap model) {
 		String query="";
 		List<Cisterna> listcisterna = cisternaInterfaces.cboCisterna(query);
 		System.out.println(listcisterna);
@@ -77,5 +77,12 @@ public class CrudCisternaController {
 		return resultado;
 	}
 
-	
+	@RequestMapping(value="/ListaAsgCisterna",method=RequestMethod.GET)
+	public String verListaAsgCisterna(ModelMap model) {
+		String query="";
+		List<AsignacionCisterna> listAsgCisterna = asignacion.listado(query);
+		System.out.println(listAsgCisterna);
+		model.addAttribute("listAsgCisterna", listAsgCisterna);
+		return "listarAsigacionCisterna";
+	}
 }
