@@ -68,7 +68,7 @@
         </form>
         </div>
         
-        
+        <h1>Hola</h1>
         <script type="text/javascript">
         
         function limpiar(){
