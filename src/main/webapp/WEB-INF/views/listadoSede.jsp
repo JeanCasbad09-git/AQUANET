@@ -50,7 +50,7 @@
                     <th scope="col">SEDE</th>
                     <th scope="col">USUARIO</th>
                     <th scope="col"></th>
-                    <th scope="col"></th>
+<!--                     <th scope="col"></th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -64,7 +64,7 @@
                     <td><%=sol.getVC_SEDE() %></td>
                     <td><%=sol.getVC_USER() %></td>
                     <td ><input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+sol.getIN_ID_SEDE() +"');" %> style='color:white; font-weight: bold;'></td>
-                    <td ><input type="button" class="btn btn-warning btn-sm" value="ATENDIDA" onclick=<%="actualizar('"+sol.getIN_ID_SEDE() +"');" %> style='color:white; font-weight: bold;'></td>
+<%--                     <td ><input type="button" class="btn btn-warning btn-sm" value="ATENDIDA" onclick=<%="actualizar('"+sol.getIN_ID_SEDE() +"');" %> style='color:white; font-weight: bold;'></td> --%>
                    
                     </tr>
                 <%} %>

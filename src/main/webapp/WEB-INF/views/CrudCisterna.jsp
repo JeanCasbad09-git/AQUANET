@@ -99,7 +99,7 @@
             
                <button class="btn btn-dark" type="button" onclick="grabar();">Registrar</button>
                <button type="button" class="btn btn-info" onclick="limpiar();" style="color:white;">Limpiar</button>
-               <button type="button" class="btn btn-danger" onclick="location.href='http://localhost:8080/AQUANET/home/index'" style="color:white;">Regresar</button>
+               <button type="button" class="btn btn-danger" onclick="location.href='http://localhost:8080/AQUANET/cisterna/ListaAsgCisterna'" style="color:white;">Regresar</button>
             
             </div>
 					

@@ -80,7 +80,7 @@
          }
         
 	function grabar(){ 
-		var direccion = $("#txtSede").val().trim();
+		var sede = $("#txtSede").val().trim();
 	    var distrito = $("#txtDistrito").val().trim();
 	    var provincia = $("#txtProvincia").val().trim();
 	    var departamento = $("#txtDepartamento").val().trim();

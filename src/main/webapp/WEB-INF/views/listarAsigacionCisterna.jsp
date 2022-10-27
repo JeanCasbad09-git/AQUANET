@@ -64,7 +64,8 @@
             </table>
             
         </div>
-
+		<button type="button" class="btn btn-dark" onclick="location.href='http://localhost:8080/AQUANET/cisterna//CrudCisterna'" style="color:white;">Nueva Asignacion</button>
+		
         </div>
         
 </body>
