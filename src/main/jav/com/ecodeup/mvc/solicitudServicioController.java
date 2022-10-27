@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.DAOFactory;
+import entities.Session;
 import entities.Solicitud_Servicio;
 import interfaces.Solicitud_ServicioInterface;
 import interfaces.UsuarioInterface;
@@ -99,12 +100,13 @@ public class solicitudServicioController {
 	
 	@RequestMapping(value="/registrarSolicitud",method=RequestMethod.POST)
 	@ResponseBody
-	public String registrarSolicitud(String direccion,String distrito,String provincia,String departamento,String usuario,ModelMap model) {
+	public String registrarSolicitud(String direccion,String distrito,String provincia,String departamento,/*String usuario,*/ModelMap model) {
 		int resulRegisSol = -1;
 		int codUsuario=0;
 		String resultadoFinal="";
 		
-		codUsuario = usuInt.obtenerIdUsuarioXUser(usuario);
+//		codUsuario = usuInt.obtenerIdUsuarioXUser(usuario);
+		codUsuario = usuInt.obtenerIdUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
 		if(codUsuario!=0) {
 			Solicitud_Servicio obj = new Solicitud_Servicio();
 			obj.setVC_DIRECCION(direccion);
@@ -123,6 +125,8 @@ public class solicitudServicioController {
 		else {
 			resultadoFinal ="EL USUARIO NO EXISTE";
 		}
+//		System.out.println("Usuario: " + Session.getCurrentInstance().getLoggedUser());
+//		System.out.println("CodUsuario: " + codUsuario);
 		return resultadoFinal;
 	}
 }

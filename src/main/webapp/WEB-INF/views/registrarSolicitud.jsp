@@ -50,13 +50,13 @@
             </div>
             </div>
             <br>
-            <div class="form-group row">
-                <label class="col-sm-2  col-form-label " >USUARIO  :</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="txtUsuario" style="width: 200px;">
-            </div>
-            </div>
-            <br>
+<!--             <div class="form-group row"> -->
+<!--                 <label class="col-sm-2  col-form-label " >USUARIO  :</label> -->
+<!--             <div class="col-sm-10"> -->
+<!--                 <input type="text" class="form-control" id="txtUsuario" style="width: 200px;"> -->
+<!--             </div> -->
+<!--             </div> -->
+<!--             <br> -->
             <div class="form-row">
             <center>
                <button type="button" class="btn btn-outline-success" onclick="grabar();">GRABAR</button>
@@ -84,18 +84,18 @@
 	    var distrito = $("#txtDistrito").val().trim();
 	    var provincia = $("#txtProvincia").val().trim();
 	    var departamento = $("#txtDepartamento").val().trim();
-	    var usuario = $("#txtUsuario").val().trim();
+// 	    var usuario = $("#txtUsuario").val().trim();
 
 	    
 	    if(direccion!= null && direccion != ""){
 	    	if(distrito!= null && distrito != ""){
 	    		if(provincia!= null && provincia != ""){
 	    			if(departamento!= null && departamento != ""){
-	    				if(usuario!= null && usuario != ""){
+// 	    				if(usuario!= null && usuario != ""){
 	    					 $.ajax({
 							        type: 'POST',
 							          url: "registrarSolicitud",
-							          data: {"direccion":direccion,"distrito":distrito,"provincia":provincia,"departamento":departamento,"usuario":usuario},
+							          data: {"direccion":direccion,"distrito":distrito,"provincia":provincia,"departamento":departamento/*,"usuario":usuario*/},
 							          success: function(data){
 							        	  if(data == "REGISTRO EXITOSO"){
 							        		  alertaSuccesPersonalizada(data);
@@ -109,9 +109,9 @@
 							        	  alertaErrorPersonalizada("ERROR");
 							          }
 							          }); 
-					    }else{
-					    	alertaInfoPersonalizada("Ingrese su usuario")
-					    }
+// 					    }else{
+// 					    	alertaInfoPersonalizada("Ingrese su usuario")
+// 					    }
 				    }else{
 				    	alertaInfoPersonalizada("Ingrese su departamento")
 				    }

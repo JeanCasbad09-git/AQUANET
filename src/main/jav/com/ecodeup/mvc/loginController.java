@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.DAOFactory;
 import entities.Persona;
+import entities.Session;
 import entities.Usuario;
 import interfaces.PersonaInterface;
 import interfaces.UsuarioInterface;
@@ -35,6 +36,7 @@ public class loginController {
 		String existe = usuInt.verificarCredenciales(user, password);
 		if(existe == "SI") {
 			existe = "BIENVENIDO";
+			Session.getCurrentInstance().setLoggedUser(user);
 		}else {
 			existe = "USUARIO O CONTRASEÑA INCORRECTOS"; 
 		}
