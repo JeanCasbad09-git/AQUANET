@@ -13,4 +13,5 @@ public interface UsuarioInterface {
 	public Usuario obtenerUsuario(int IN_ID_USUARIO,int IN_ID_PERSONA);
 	public int actualizarUsuario(Usuario obj);
 	public int obtenerIdUsuarioXUser(String user);
+	public String obtenerTipoUsuarioXUser(String user);
 }

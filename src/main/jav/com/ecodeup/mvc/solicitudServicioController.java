@@ -25,6 +25,8 @@ public class solicitudServicioController {
 	@RequestMapping(value="/solicitudesAct",method=RequestMethod.GET)
 	public String verListSolicitudes(String parametros, ModelMap model) {
 		
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		
 		ArrayList<Solicitud_Servicio> listado=new ArrayList<Solicitud_Servicio>();
 		Solicitud_Servicio obj = new Solicitud_Servicio();
 		String [] xCC = parametros.split(",");
@@ -60,7 +62,8 @@ public class solicitudServicioController {
 		
 		listado = solSerInt.listado(obj);
 		model.addAttribute("Solicitud",listado);
-
+		model.addAttribute("Tipo",tipo);
+		System.out.println(tipo);
 		return "listadoSolicitudes";
 	}
 	

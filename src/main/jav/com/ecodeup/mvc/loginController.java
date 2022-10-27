@@ -217,5 +217,12 @@ public class loginController {
 		
 		return resultado;
 	}
+
+	
+	@RequestMapping(value="/menu",method=RequestMethod.GET)
+	public String verMenu(ModelMap model) {
+		return "Menu";
+	}
+	
 	
 }

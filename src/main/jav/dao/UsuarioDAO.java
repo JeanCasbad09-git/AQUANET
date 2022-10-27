@@ -307,5 +307,38 @@ public class UsuarioDAO implements UsuarioInterface{
 		}
 		return codigo;
 	}
+
+	@Override
+	public String obtenerTipoUsuarioXUser(String user) {
+		String tipo="";
+		Conexion conexion = new Conexion();
+		Connection cn = null;
+		PreparedStatement pstm=null;
+		ResultSet rs=null;
+		try {
+			cn = conexion.conectar();
+			String sql="SELECT (select VC_TIPO from persona p where p.IN_ID_PERSONA=u.IN_ID_PERSONA) as 'TIPO' FROM usuario u where u.VC_USER=? order by 1 desc limit 1";
+			pstm=cn.prepareStatement(sql);
+			pstm.setString(1, user);
+			rs=pstm.executeQuery();
+			
+			while(rs.next()) {
+				tipo = rs.getString(1);
+
+			}
+			
+		}catch(Exception e) {
+			System.out.println("ERROR EN BUSCAR: "+e.getMessage());
+		}finally {
+			try {
+				if(cn!=null)cn.close();
+				if(pstm!=null)pstm.close();
+				if(rs!=null)rs.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return tipo;
+	}
 	
 }
