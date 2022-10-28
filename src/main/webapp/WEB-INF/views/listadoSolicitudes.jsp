@@ -73,8 +73,22 @@ if(tipo.trim().equals("ADM")){
                     <td><%=sol.getVC_DISTRITO() %></td>
                     <td><%=sol.getVC_DIRECCION() %></td>
                     <td><%=sol.getVC_USER() %></td>
-                    <td ><input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;'></td>
-                    <td ><input type="button" class="btn btn-warning btn-sm" value="ATENDIDA" onclick=<%="actualizar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;'></td>
+                    <td >
+                    <%if(tipo.trim().equals("ADM")) {%>
+                    <input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;'>
+                    <%}else{ %>
+                    <input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;display:none'>
+                    <%} %>
+                    
+                    </td>
+                    <td >
+                    <%if(tipo.trim().equals("ADM")) {%>
+                    <input type="button" class="btn btn-warning btn-sm" value="ATENDIDA" onclick=<%="actualizar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;'>
+                    <%}else{ %>
+                    <input type="button" class="btn btn-warning btn-sm" value="ATENDIDA" onclick=<%="actualizar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;display:none'>
+                    <%} %>
+                    
+                    </td>
                    
                     </tr>
                 <%} %>

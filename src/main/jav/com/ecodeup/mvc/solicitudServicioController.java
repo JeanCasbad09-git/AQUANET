@@ -63,7 +63,7 @@ public class solicitudServicioController {
 		listado = solSerInt.listado(obj);
 		model.addAttribute("Solicitud",listado);
 		model.addAttribute("Tipo",tipo);
-		System.out.println(tipo);
+
 		return "listadoSolicitudes";
 	}
 	
@@ -98,6 +98,8 @@ public class solicitudServicioController {
 	
 	@RequestMapping(value="/registrar",method=RequestMethod.GET)
 	public String registrar(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "registrarSolicitud";
 	}
 	

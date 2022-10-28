@@ -45,6 +45,7 @@ public class loginController {
 	
 	@RequestMapping(value="/usuario",method=RequestMethod.GET)
 	public String verUsuario(ModelMap model) {
+		
 		return "registraUsuario";
 	}
 	
@@ -156,7 +157,10 @@ public class loginController {
 		
 		listado = usuInt.listado(obj);
 		model.addAttribute("Usuario",listado);
-
+		
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
+		
 		return "listadoUsuarios";
 	}
 	
@@ -182,6 +186,8 @@ public class loginController {
 		usuario = usuInt.obtenerUsuario(Integer.parseInt(xCC[0]), Integer.parseInt(xCC[1]));
 
 		model.addAttribute("Usuario",usuario);
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "actualizarUsuario";
 	}
 	
