@@ -30,6 +30,11 @@ public class loginController {
 		return "login";
 	}
 	
+	@RequestMapping(value="/inicio",method=RequestMethod.GET)
+	public String verInicio(ModelMap model) {
+		return "inicio";
+	}
+	
 	@RequestMapping(value="/verificarLogin",method=RequestMethod.POST)
 	@ResponseBody
 	public String verificarLogin(String user,String password,ModelMap model) {
