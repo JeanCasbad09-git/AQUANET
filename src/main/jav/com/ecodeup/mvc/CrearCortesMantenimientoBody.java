@@ -1,14 +1,13 @@
-package entities;
+package com.ecodeup.mvc;
 
-import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class CortesMantenimiento {	
+public class CrearCortesMantenimientoBody {
 	private int IN_ID_CORTXMAN;
 	private String VC_DISTRITO;
 	private String VC_PROVINCIA;
 	private String VC_DEPARTAMENTO;
 	private String VC_COMENTARIO;
-	private Date DT_FECHA;
+	private String DT_FECHA;
 }

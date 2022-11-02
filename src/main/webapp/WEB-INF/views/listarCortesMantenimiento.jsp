@@ -20,16 +20,22 @@
         <h1 class="text-center - text-success">LISTADO DE CORTES POR MANTENIMIENTO</h1>
         
         <br>
-        <form>
+        <form class="form-inline" method="GET" >
         	<div style="display: flex; gap: 1rem;">
-                <label class="col-sm-2  col-form-label ">Buscar :</label>
-                <input type="text" id="txtBuscar">
+                <label class="col-sm-2  col-form-label ">Buscar :</label>             
+            </div>
+            <div>
+            	<input type="text" name="name" class="form-control" id="name" value="${name}" placeholder="Digite el valor a buscar">           	
+            </div>
+            <br>
+            <div>
+            	<input type="submit" class="btn btn-outline-warning" value="Buscar">
+            	&nbsp;&nbsp;
+            	<a type="button" id="btnli" class="btn btn-outline-warning" href="/AQUANET/cortes/listado">LIMPIAR</a>
             </div>
         </form>
         <br>
-<button type="button" class="btn btn-outline-info" onclick="filtrar();">BUSCAR</button>
 <a class="btn btn-outline-info" href="/AQUANET/cortes/crear">REGISTRAR</a>
-<button type="button" class="btn btn-outline-warning" onclick="limpiar();">LIMPIAR</button>
 <br>
         <br>
         <div>
@@ -57,7 +63,7 @@
                     <td><%=cor.getVC_DEPARTAMENTO() %></td>
                     <td><%=cor.getVC_COMENTARIO() %></td>
                     <td><%=cor.getDT_FECHA() %></td>
-                    <td ><input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+cor.getIN_ID_CORTXMAN() +"','"+cor.getIN_ID_CORTXMAN() +"');" %> style='color:white; font-weight: bold;'></td>
+                    <td ><a class="btn btn-danger btn-sm" value="ELIMINAR" id="eliminar" onclick=<%="eliminar("+cor.getIN_ID_CORTXMAN()+")"%> style='color:white; font-weight: bold;'>ELIMINAR</a></td>
                     <td ><a class="btn btn-warning btn-sm" value="ACTUALIZAR" href=<%="/AQUANET/cortes/editar/"+cor.getIN_ID_CORTXMAN() +"" %> style='color:white; font-weight: bold;'>ACTUALIZAR</a></td>
                     </tr>
                 <%} %>
@@ -68,4 +74,31 @@
 
         </div>
 </body>
+<script type="text/javascript">
+async function eliminar(pCodCor){
+	const alertResponse = await Swal.fire({position: 'center',
+		  title: "ELIMINAR CORTE?",
+		  showDenyButton: true,
+		  confirmButtonText: 'SI',
+		  denyButtonText: 'NO',
+	});
+	
+	if (alertResponse.isConfirmed) {
+		const response = await fetch('/AQUANET/cortes/eliminar/' + pCodCor);
+		if (response.ok) {
+			const { isConfirmed } = await Swal.fire({
+        		position: 'center',
+        		icon: 'success',
+      		  	title: "ELIMINACION EXITOSA",
+      		  	showDenyButton: false,
+      		  	confirmButtonText: 'OK'
+      	
+      		});
+			if (isConfirmed) location.href="/AQUANET/cortes/listado?name=";
+		} else {
+			alertaErrorPersonalizada("ERROR");
+		}
+	}
+}
+</script>
 </html>

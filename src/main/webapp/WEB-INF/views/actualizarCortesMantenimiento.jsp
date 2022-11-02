@@ -1,6 +1,7 @@
 <%@page import="entities.CortesMantenimiento"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
                     <br>
                 <h1 class="text-center - text-success">ACTUALIZAR CORTES POR MANTENIMIENTO</h1>
                 <br>
-                <form>
+                <form method="POST">
                     <table>
                         <%
                 CortesMantenimiento cor=(CortesMantenimiento)request.getAttribute("cortes");
@@ -24,42 +25,41 @@
                 <tr>
                 	<input id="txtCodCorte" type="hidden" value=<%=cor.getIN_ID_CORTXMAN() %>>
                     <td><label class="col-sm-2  col-form-label ">Distrito:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                    <td><input type="text" value=<%="'"+ cor.getVC_DISTRITO() + "'"%> class="form-control" id="txtDistrito" style="width: 600px;"></td>
+                    <td><input type="text" value=<%="'"+ cor.getVC_DISTRITO() + "'"%> class="form-control" name="VC_DISTRITO" id="txtDistrito" style="width: 600px;"></td>
                     
                 </tr>
                <tr><td>&nbsp;</td></tr>
                <tr>
                     <td><label class="col-sm-2  col-form-label ">Provincia:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                    <td><input type="text" value=<%="'"+ cor.getVC_PROVINCIA() + "'"%> class="form-control" id="txtProvincia" style="width: 600px;"></td>
+                    <td><input type="text" value=<%="'"+ cor.getVC_PROVINCIA() + "'"%> class="form-control" name="VC_PROVINCIA" id="txtProvincia" style="width: 600px;"></td>
                     
                 </tr>
                 <tr><td>&nbsp;</td></tr>
                 <tr>
                     <td><label class="col-sm-2  col-form-label ">Departamento:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                    <td><input type="text" value=<%="'"+ cor.getVC_DEPARTAMENTO() + "'"%> class="form-control" id="txtDepartamento" style="width: 600px;"></td>
+                    <td><input type="text" value=<%="'"+ cor.getVC_DEPARTAMENTO() + "'"%> class="form-control" name="VC_DEPARTAMENTO" id="txtDepartamento" style="width: 600px;"></td>
                     
                 </tr>
 				
 				<tr><td>&nbsp;</td></tr>
                 <tr>
                     <td><label class="col-sm-2  col-form-label ">Comentario:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                    <td><input type="text" value=<%="'"+ cor.getVC_COMENTARIO() + "'"%> class="form-control" id="txtComentario" style="width: 600px;"></td>
+                    <td><input type="text" value=<%="'"+ cor.getVC_COMENTARIO() + "'"%> class="form-control" name="VC_COMENTARIO" id="txtComentario" style="width: 600px;"></td>
                     
                 </tr>
 				
 				<tr><td>&nbsp;</td></tr>
                 <tr>
                     <td><label class="col-sm-2  col-form-label ">Fecha Cortes:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                    <td><input type="text" value=<%="'"+ cor.getDT_FECHA() + "'"%> class="form-control" id="txtFecha" style="width: 600px;"></td>
-                    
+                    <td><input type="date" value=<%="'"+ cor.getDT_FECHA() + "'"%> class="form-control" name="DT_FECHA" id="txtFecha" style="width: 600px;"></td>       
                 </tr>
 
                     </table>
                     <br>
                     <div class="form-row">
             <center>
-               <button type="button" class="btn btn-outline-success" onclick="grabar();">Actualizar</button>
-               <a  class="btn btn-outline-danger" href="/AQUANET/cortes/index">Regresar</a>
+               <button type="submit" class="btn btn-outline-success">Actualizar</button>
+               <a  class="btn btn-outline-danger" href="/AQUANET/cortes/listado?name=" >Regresar</a>
             </center>
             </div>
                 </form>

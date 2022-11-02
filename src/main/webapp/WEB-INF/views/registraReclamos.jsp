@@ -1,5 +1,4 @@
 <%@page import="entities.Reclamos"%>
-<%@page import="entities.CortesMantenimiento"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -22,10 +21,8 @@
                 <tr><td>&nbsp;</td></tr>
                 <tr>
                     <td><label class="col-sm-2  col-form-label ">Reclamo:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                    <td><textarea type="text" class="form-control" id="txtReclamo" style="width: 600px; rows="3" name="VC_RECLAMO"></textarea></td>
-                    
+                    <td><textarea type="text" class="form-control" id="txtReclamo" style="width: 600px; rows="3" name="VC_RECLAMO"></textarea></td>          
                 </tr>
-
                     </table>
                     <br>
                     <div class="form-row">

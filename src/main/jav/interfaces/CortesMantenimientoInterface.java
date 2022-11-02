@@ -10,5 +10,6 @@ public interface CortesMantenimientoInterface {
 	public int deleteCorte_Mantenimiento(int IN_ID_CORTXMAN);
 	public ArrayList<CortesMantenimiento> listCorte(String query);
 	CortesMantenimiento getCorteById(int IN_ID_CORTXMAN);
+	public ArrayList<CortesMantenimiento> Search(String query);
 
 }

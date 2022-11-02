@@ -1,15 +1,17 @@
 package com.ecodeup.mvc;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dao.DAOFactory;
 import entities.CortesMantenimiento;
@@ -18,6 +20,7 @@ import interfaces.CortesMantenimientoInterface;
 @Controller
 @RequestMapping("/cortes")
 public class CortesMantenimientoController {
+	
 	CortesMantenimientoInterface corManInt;
 	
 	
@@ -26,12 +29,16 @@ public class CortesMantenimientoController {
 		this.corManInt = daoFactory.getCortesMantenimientoInterface();	
 	}
 	
-	
-	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String mostrarListaCortesMantenimiento(Model model) {
-		String query = "";
-		List<CortesMantenimiento> cortes = corManInt.listCorte(query);	
-		System.out.println(cortes);
+	@RequestMapping(value="/listado", method=RequestMethod.GET)
+	public String FiltrarListaCortesMantenimiento(Model model,@RequestParam(name = "name", required = false) String name) {
+		List<CortesMantenimiento> cortes = corManInt.listCorte(name);		
+		if (name == null || name == "") {	 
+			cortes = corManInt.listCorte(name);
+		}else {
+			cortes = corManInt.Search(name);
+		}
+		
+		model.addAttribute("name", name);
 		model.addAttribute("cortes", cortes);
 		return "listarCortesMantenimiento";
 	}
@@ -42,41 +49,60 @@ public class CortesMantenimientoController {
 	}
 	
 	@RequestMapping(value="/crear", method=RequestMethod.POST)
-	public String createCortesMantenimiento(@ModelAttribute("corte") CortesMantenimiento cortes) {
-		corManInt.createCorte_Mantenimiento(cortes);
-		return "registraCortesMantenimiento";
+	public String createCortesMantenimiento(@ModelAttribute("corte") CrearCortesMantenimientoBody corte) {
+		Date d;
+		
+		try {
+			d = new SimpleDateFormat("yyyy-MM-dd").parse(corte.getDT_FECHA());
+		} catch (ParseException e) {
+			return "redirect:/cortes/crear";	
+		}
+		
+		CortesMantenimiento newCorte = new CortesMantenimiento();
+		newCorte.setVC_COMENTARIO(corte.getVC_COMENTARIO());
+		newCorte.setVC_DEPARTAMENTO(corte.getVC_DEPARTAMENTO());
+		newCorte.setVC_DISTRITO(corte.getVC_DISTRITO());
+		newCorte.setVC_PROVINCIA(corte.getVC_PROVINCIA());
+		newCorte.setDT_FECHA(new java.sql.Date(d.getTime()));
+		
+		corManInt.createCorte_Mantenimiento(newCorte);
+		return "redirect:/cortes/listado?name=";
 	}
-	
-	/**@GetMapping("/cortes/editar/{id}")
-	public String mostrarEditarCortes(@PathVariable("id") int id, Model model) {
-		corManInt.getCorteById(id);
-		if
-		return "";
-	}**/
-	
-	/**@PostMapping("/cortes/editar/{id}")
-	public String EditCortesMantenimiento(@PathVariable("id") int id, @ModelAttribute("cortes") Corte_Mantenimiento corte)  {
-		corte.setIN_ID_CORTXMAN(id);
-		corManInt.updateCorte_Mantenimiento(id, corte);
-		return "redirect:/cortes";
-	} **/
 	
 	@RequestMapping(value="/editar/{id}", method=RequestMethod.GET)
 	public String mostrarEditarCortes(@PathVariable("id") int id, Model model) {
 		CortesMantenimiento cortes = corManInt.getCorteById(id); 
 		model.addAttribute("cortes", cortes);
+		System.out.println(cortes);
 		return "actualizarCortesMantenimiento";
 	}
-	@PostMapping("/cortes/editar/{id}")
-	public String EditCortesMantenimiento(@PathVariable("id") int id, @ModelAttribute("cortes") CortesMantenimiento corte) {
-			
-		return "redirect:/cortes";
+	@RequestMapping(value="/editar/{id}", method=RequestMethod.POST)
+	public String EditCortesMantenimiento(@PathVariable("id") int id, @ModelAttribute("corte") CrearCortesMantenimientoBody corte) {
+		Date d;
+		
+		try {
+			d = new SimpleDateFormat("yyyy-MM-dd").parse(corte.getDT_FECHA());
+		} catch (ParseException e) {
+			return "redirect:/cortes/listado?name=";	
+		}
+		
+		CortesMantenimiento newCorte = new CortesMantenimiento();
+		newCorte.setIN_ID_CORTXMAN(id);
+		newCorte.setVC_COMENTARIO(corte.getVC_COMENTARIO());
+		newCorte.setVC_DEPARTAMENTO(corte.getVC_DEPARTAMENTO());
+		newCorte.setVC_DISTRITO(corte.getVC_DISTRITO());
+		newCorte.setVC_PROVINCIA(corte.getVC_PROVINCIA());
+		newCorte.setDT_FECHA(new java.sql.Date(d.getTime()));
+		
+		corManInt.updateCorte_Mantenimiento(newCorte);
+		return "redirect:/cortes/listado?name=";
 	}
 	
 	
-	@GetMapping("/cortes/eliminar/{id}")
+	@RequestMapping(value="/eliminar/{id}", method=RequestMethod.GET)
     public String deleteCortesMantenimiento(@PathVariable("id") int id) {
         corManInt.deleteCorte_Mantenimiento(id);      
-        return "redirect:/cortes";
+        return "redirect:/cortes/listado?name=";
     }
+	
 }

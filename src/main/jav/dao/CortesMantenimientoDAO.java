@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -21,15 +20,14 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 		ResultSet rs = null;		
 		try {
 			cn = conexion.conectar();
-			
 			String sql = "insert into cortexmantenimiento(VC_DISTRITO,VC_PROVINCIA,VC_DEPARTAMENTO,VC_COMENTARIO,DT_FECHA) "
-					+ "		values (?,?,?,?,?)";
+					+ "values (?,?,?,?,?);";
 			pstm=cn.prepareStatement(sql);
 			pstm.setString(1, obj.getVC_DISTRITO());
 			pstm.setString(2, obj.getVC_PROVINCIA());
 			pstm.setString(3, obj.getVC_DEPARTAMENTO());
 			pstm.setString(4, obj.getVC_COMENTARIO());
-			pstm.setDate(5, (Date) obj.getDT_FECHA());
+			pstm.setDate(5, obj.getDT_FECHA());
 			pstm.execute();
 		} catch (Exception e) {
 			System.out.println("ERROR AL REGISTRAR: "+e.getMessage());
@@ -40,9 +38,10 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 				if(rs!=null)rs.close();
 			} catch (Exception e) {
 				e.printStackTrace();
-			} {}
+			} 
 		}
 		return result;
+		
 	}
 
 	@Override
@@ -63,6 +62,7 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 			pstm.setString(3, obj.getVC_DEPARTAMENTO());
 			pstm.setString(4, obj.getVC_COMENTARIO());
 			pstm.setDate(5, obj.getDT_FECHA());
+			pstm.setInt(6, obj.getIN_ID_CORTXMAN());
 			pstm.execute();
 		} catch (Exception e) {
 			System.out.println("ERROR AL ACTUALIZAR: "+e.getMessage());
@@ -166,7 +166,7 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 				cor.setVC_DISTRITO(rs.getString(2));
 				cor.setVC_PROVINCIA(rs.getString(3));
 				cor.setVC_DEPARTAMENTO(rs.getString(4));
-				cor.setVC_COMENTARIO(rs.getString(4));
+				cor.setVC_COMENTARIO(rs.getString(5));
 				cor.setDT_FECHA(rs.getDate(6));
 			}
 		}catch(Exception e) {
@@ -182,4 +182,47 @@ public class CortesMantenimientoDAO implements CortesMantenimientoInterface {
 		}
 		return cor;
 	}
+	
+	@Override
+	public ArrayList<CortesMantenimiento> Search(String name) {
+		ArrayList<CortesMantenimiento> coxm = new ArrayList<CortesMantenimiento>();
+		Conexion conexion = new Conexion();
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			cn = conexion.conectar();
+			String sql= "Select IN_ID_CORTXMAN as ID, VC_DISTRITO as Distrito, VC_PROVINCIA as Provincia, VC_DEPARTAMENTO as Departamento, VC_COMENTARIO as Comentario, DT_FECHA as FechaCorte from cortexmantenimiento where VC_DISTRITO lIKE ? OR VC_PROVINCIA LIKE ? OR VC_DEPARTAMENTO LIKE ? ORDER BY DT_FECHA desc";		
+			pstm=cn.prepareStatement(sql);
+			String likeName = name + "%";
+			pstm.setString(1, likeName);
+			pstm.setString(2, likeName);
+			pstm.setString(3, likeName);
+			rs=pstm.executeQuery();
+			CortesMantenimiento obj = new CortesMantenimiento();
+			while(rs.next()) {		
+				obj=new CortesMantenimiento();
+				obj.setIN_ID_CORTXMAN(rs.getInt(1));
+				obj.setVC_DISTRITO(rs.getString(2));
+				obj.setVC_PROVINCIA(rs.getString(3));
+				obj.setVC_DEPARTAMENTO(rs.getString(4));
+				obj.setVC_COMENTARIO(rs.getString(5));
+				obj.setDT_FECHA(rs.getDate(6));
+				coxm.add(obj);
+			}
+		}catch(Exception e) {
+			System.out.println("ERROR EN LISTAR: "+e.getMessage());
+		}finally {
+			try {
+				if(cn!=null)cn.close();
+				if(pstm!=null)pstm.close();
+				if(rs!=null)rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return coxm;
+	}
+	
+	
 }
