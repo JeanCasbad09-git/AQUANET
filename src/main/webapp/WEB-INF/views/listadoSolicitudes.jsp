@@ -13,8 +13,19 @@
 <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
+<%
+String tipo =(String)request.getAttribute("Tipo");
+if(tipo.trim().equals("ADM")){  
+%>
+	<%@ include file = "MenuAdmin.jsp" %>
+	<%}else{ %>
+	<%@ include file = "MenuCliente.jsp" %>
+	<%} %>
+	
 <body style="background-color: #f0f8ff;" >
+
         <div class="container">
             <br>
         <h1 class="text-center - text-success"">LISTADO DE SOLICITUDES</h1>
@@ -62,8 +73,22 @@
                     <td><%=sol.getVC_DISTRITO() %></td>
                     <td><%=sol.getVC_DIRECCION() %></td>
                     <td><%=sol.getVC_USER() %></td>
-                    <td ><input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;'></td>
-                    <td ><input type="button" class="btn btn-warning btn-sm" value="ATENDIDA" onclick=<%="actualizar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;'></td>
+                    <td >
+                    <%if(tipo.trim().equals("ADM")) {%>
+                    <input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;'>
+                    <%}else{ %>
+                    <input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;display:none'>
+                    <%} %>
+                    
+                    </td>
+                    <td >
+                    <%if(tipo.trim().equals("ADM")) {%>
+                    <input type="button" class="btn btn-warning btn-sm" value="ATENDIDA" onclick=<%="actualizar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;'>
+                    <%}else{ %>
+                    <input type="button" class="btn btn-warning btn-sm" value="ATENDIDA" onclick=<%="actualizar('"+sol.getIN_ID_SOLICITUD_SERVICIO() +"');" %> style='color:white; font-weight: bold;display:none'>
+                    <%} %>
+                    
+                    </td>
                    
                     </tr>
                 <%} %>

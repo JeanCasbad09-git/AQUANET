@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.DAOFactory;
 import entities.Persona;
+import entities.Session;
 import entities.Usuario;
 import interfaces.PersonaInterface;
 import interfaces.UsuarioInterface;
@@ -29,12 +30,20 @@ public class loginController {
 		return "login";
 	}
 	
+	@RequestMapping(value="/principal",method=RequestMethod.GET)
+	public String verInicio(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
+		return "inicio";
+	}
+	
 	@RequestMapping(value="/verificarLogin",method=RequestMethod.POST)
 	@ResponseBody
 	public String verificarLogin(String user,String password,ModelMap model) {
 		String existe = usuInt.verificarCredenciales(user, password);
 		if(existe == "SI") {
 			existe = "BIENVENIDO";
+			Session.getCurrentInstance().setLoggedUser(user);
 		}else {
 			existe = "USUARIO O CONTRASEÑA INCORRECTOS"; 
 		}
@@ -43,6 +52,7 @@ public class loginController {
 	
 	@RequestMapping(value="/usuario",method=RequestMethod.GET)
 	public String verUsuario(ModelMap model) {
+		
 		return "registraUsuario";
 	}
 	
@@ -154,7 +164,10 @@ public class loginController {
 		
 		listado = usuInt.listado(obj);
 		model.addAttribute("Usuario",listado);
-
+		
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
+		
 		return "listadoUsuarios";
 	}
 	
@@ -180,6 +193,8 @@ public class loginController {
 		usuario = usuInt.obtenerUsuario(Integer.parseInt(xCC[0]), Integer.parseInt(xCC[1]));
 
 		model.addAttribute("Usuario",usuario);
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "actualizarUsuario";
 	}
 	
@@ -215,5 +230,12 @@ public class loginController {
 		
 		return resultado;
 	}
+
+	
+	@RequestMapping(value="/menu",method=RequestMethod.GET)
+	public String verMenu(ModelMap model) {
+		return "Menu";
+	}
+	
 	
 }

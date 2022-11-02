@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.DAOFactory;
+import entities.Session;
 import entities.Solicitud_Servicio;
 import interfaces.Solicitud_ServicioInterface;
 import interfaces.UsuarioInterface;
@@ -23,6 +24,8 @@ public class solicitudServicioController {
 	
 	@RequestMapping(value="/solicitudesAct",method=RequestMethod.GET)
 	public String verListSolicitudes(String parametros, ModelMap model) {
+		
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
 		
 		ArrayList<Solicitud_Servicio> listado=new ArrayList<Solicitud_Servicio>();
 		Solicitud_Servicio obj = new Solicitud_Servicio();
@@ -59,6 +62,7 @@ public class solicitudServicioController {
 		
 		listado = solSerInt.listado(obj);
 		model.addAttribute("Solicitud",listado);
+		model.addAttribute("Tipo",tipo);
 
 		return "listadoSolicitudes";
 	}
@@ -94,17 +98,20 @@ public class solicitudServicioController {
 	
 	@RequestMapping(value="/registrar",method=RequestMethod.GET)
 	public String registrar(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "registrarSolicitud";
 	}
 	
 	@RequestMapping(value="/registrarSolicitud",method=RequestMethod.POST)
 	@ResponseBody
-	public String registrarSolicitud(String direccion,String distrito,String provincia,String departamento,String usuario,ModelMap model) {
+	public String registrarSolicitud(String direccion,String distrito,String provincia,String departamento,/*String usuario,*/ModelMap model) {
 		int resulRegisSol = -1;
 		int codUsuario=0;
 		String resultadoFinal="";
 		
-		codUsuario = usuInt.obtenerIdUsuarioXUser(usuario);
+//		codUsuario = usuInt.obtenerIdUsuarioXUser(usuario);
+		codUsuario = usuInt.obtenerIdUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
 		if(codUsuario!=0) {
 			Solicitud_Servicio obj = new Solicitud_Servicio();
 			obj.setVC_DIRECCION(direccion);
@@ -123,6 +130,8 @@ public class solicitudServicioController {
 		else {
 			resultadoFinal ="EL USUARIO NO EXISTE";
 		}
+//		System.out.println("Usuario: " + Session.getCurrentInstance().getLoggedUser());
+//		System.out.println("CodUsuario: " + codUsuario);
 		return resultadoFinal;
 	}
 }

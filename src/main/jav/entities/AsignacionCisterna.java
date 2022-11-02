@@ -13,9 +13,13 @@ public class AsignacionCisterna {
 	private int IN_ID_CISTERNA;
 	private int IN_ID_CHOFER;
 	private int IN_ID_AGUATERO ;
-	private Date DT_FEC_ASIGNADO;
+	private String DT_FEC_ASIGNADO;
 	private Date DT_FEC_REGISTRO;
 	private String VC_PARADA_1;
 	private String VC_PARADA_2;
 	private String VC_PARADA_3;
+	
+
+	private Trabajador trabajador = new Trabajador();
+	private Cisterna cisterna = new Cisterna();
 }

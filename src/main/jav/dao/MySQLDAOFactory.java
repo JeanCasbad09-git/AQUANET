@@ -1,10 +1,13 @@
 package dao;
 
 import interfaces.AsignacionCisternaInterfaces;
+import interfaces.CocheCisternaInterfaces;
 import interfaces.CortesMantenimientoInterface;
 import interfaces.PersonaInterface;
 import interfaces.ReclamosInterface;
+import interfaces.SedeInterface;
 import interfaces.Solicitud_ServicioInterface;
+import interfaces.TrabajadorInterfaces;
 import interfaces.UsuarioInterface;
 import interfaces.UtilidadesInterfaces;
 
@@ -50,7 +53,22 @@ public class MySQLDAOFactory extends DAOFactory{
 
 		return new AsignacionCisternaDAO();
 	}
+	
+	@Override
+	public TrabajadorInterfaces getTrabajadorInterfaces() {
+
+		return new TrabajadorDAO();
+	}
+	@Override
+	public CocheCisternaInterfaces getCisternaInterfaces() {
+
+		return new CisternaDAO();
+	}
+
+	@Override
+	public SedeInterface getSedeInterface() {
+		return new SedeDAO();
+	}
+
 
 }
-	
-

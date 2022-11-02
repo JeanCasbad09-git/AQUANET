@@ -14,6 +14,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+<%
+String tipo =(String)request.getAttribute("Tipo");
+if(tipo.trim().equals("ADM")){  
+%>
+	<%@ include file = "MenuAdmin.jsp" %>
+	<%}else{ %>
+	<%@ include file = "MenuCliente.jsp" %>
+	<%} %>
 <body style="background-color: #f0f8ff;" >
         <div class="container">
             <br>
@@ -58,8 +66,20 @@
                     <td><%=usu.getVC_DNI() %></td>
                     <td><%=usu.getVC_USER() %></td>
                     <td><%=usu.getDT_FEC_REG() %></td>
-                    <td ><input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+usu.getIN_ID_USUARIO() +"','"+usu.getIN_ID_PERSONA() +"');" %> style='color:white; font-weight: bold;'></td>
-                    <td ><input type="button" class="btn btn-warning btn-sm" value="ACTUALIZAR" onclick=<%="actualizar('"+usu.getIN_ID_USUARIO() +"','"+usu.getIN_ID_PERSONA() +"');" %> style='color:white; font-weight: bold;'></td>
+                    <td >
+                    <%if(tipo.trim().equals("ADM")) {%>
+                    <input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+usu.getIN_ID_USUARIO() +"','"+usu.getIN_ID_PERSONA() +"');" %> style='color:white; font-weight: bold;'>
+                    <%}else{ %>
+                    <input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+usu.getIN_ID_USUARIO() +"','"+usu.getIN_ID_PERSONA() +"');" %> style='color:white; font-weight: bold;display:none'>
+                    <%} %>
+                    </td>
+                    <td >
+                    <%if(tipo.trim().equals("ADM")) {%>
+                    <input type="button" class="btn btn-warning btn-sm" value="ACTUALIZAR" onclick=<%="actualizar('"+usu.getIN_ID_USUARIO() +"','"+usu.getIN_ID_PERSONA() +"');" %> style='color:white; font-weight: bold;'>
+                    <%}else{ %>
+                    <input type="button" class="btn btn-warning btn-sm" value="ACTUALIZAR" onclick=<%="actualizar('"+usu.getIN_ID_USUARIO() +"','"+usu.getIN_ID_PERSONA() +"');" %> style='color:white; font-weight: bold;display:none'>
+                    <%} %>
+                    </td>
                     </tr>
                 <%} %>
                 </tbody>

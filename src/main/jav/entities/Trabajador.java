@@ -11,6 +11,7 @@ public class Trabajador {
 	private int IN_EDAD;
 	private String VC_CORREO;
 	private String CH_TELEFONO;
+	private String VC_NOMBRES;
 	private int IN_CARGO;
 	
 }

@@ -15,6 +15,14 @@
 <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script></head>
+<%
+String tipo =(String)request.getAttribute("Tipo");
+if(tipo.trim().equals("ADM")){  
+%>
+	<%@ include file = "MenuAdmin.jsp" %>
+	<%}else{ %>
+	<%@ include file = "MenuCliente.jsp" %>
+	<%} %>
 <body style="background-color: #f0f8ff">
         <div class="container">
             <br>
@@ -50,13 +58,13 @@
             </div>
             </div>
             <br>
-            <div class="form-group row">
-                <label class="col-sm-2  col-form-label " >USUARIO  :</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="txtUsuario" style="width: 200px;">
-            </div>
-            </div>
-            <br>
+<!--             <div class="form-group row"> -->
+<!--                 <label class="col-sm-2  col-form-label " >USUARIO  :</label> -->
+<!--             <div class="col-sm-10"> -->
+<!--                 <input type="text" class="form-control" id="txtUsuario" style="width: 200px;"> -->
+<!--             </div> -->
+<!--             </div> -->
+<!--             <br> -->
             <div class="form-row">
             <center>
                <button type="button" class="btn btn-outline-success" onclick="grabar();">GRABAR</button>
@@ -84,18 +92,18 @@
 	    var distrito = $("#txtDistrito").val().trim();
 	    var provincia = $("#txtProvincia").val().trim();
 	    var departamento = $("#txtDepartamento").val().trim();
-	    var usuario = $("#txtUsuario").val().trim();
+// 	    var usuario = $("#txtUsuario").val().trim();
 
 	    
 	    if(direccion!= null && direccion != ""){
 	    	if(distrito!= null && distrito != ""){
 	    		if(provincia!= null && provincia != ""){
 	    			if(departamento!= null && departamento != ""){
-	    				if(usuario!= null && usuario != ""){
+// 	    				if(usuario!= null && usuario != ""){
 	    					 $.ajax({
 							        type: 'POST',
 							          url: "registrarSolicitud",
-							          data: {"direccion":direccion,"distrito":distrito,"provincia":provincia,"departamento":departamento,"usuario":usuario},
+							          data: {"direccion":direccion,"distrito":distrito,"provincia":provincia,"departamento":departamento/*,"usuario":usuario*/},
 							          success: function(data){
 							        	  if(data == "REGISTRO EXITOSO"){
 							        		  alertaSuccesPersonalizada(data);
@@ -109,9 +117,9 @@
 							        	  alertaErrorPersonalizada("ERROR");
 							          }
 							          }); 
-					    }else{
-					    	alertaInfoPersonalizada("Ingrese su usuario")
-					    }
+// 					    }else{
+// 					    	alertaInfoPersonalizada("Ingrese su usuario")
+// 					    }
 				    }else{
 				    	alertaInfoPersonalizada("Ingrese su departamento")
 				    }
