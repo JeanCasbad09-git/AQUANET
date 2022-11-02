@@ -17,6 +17,14 @@
 </style>
 
 </head>
+<%
+String tipo =(String)request.getAttribute("Tipo");
+if(tipo.trim().equals("ADM")){  
+%>
+	<%@ include file = "MenuAdmin.jsp" %>
+	<%}else{ %>
+	<%@ include file = "MenuCliente.jsp" %>
+	<%} %>
 <body>
 
 	<div class="head">

@@ -30,8 +30,10 @@ public class loginController {
 		return "login";
 	}
 	
-	@RequestMapping(value="/inicio",method=RequestMethod.GET)
+	@RequestMapping(value="/principal",method=RequestMethod.GET)
 	public String verInicio(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "inicio";
 	}
 	
