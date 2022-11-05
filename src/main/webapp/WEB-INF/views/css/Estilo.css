@@ -6,6 +6,7 @@
     border: 0;
     font-size: 100%;
     vertical-align: baseline;
+   
 }
 
 .menu{
@@ -13,10 +14,15 @@
         text-align: center;
         font-size: 6 em;
         font-family: "Segoe UI";
+         
 }
 body {
+	
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
+  text-align:center;
+   width: 100%;
+   
 }
 
 .head {
@@ -33,6 +39,8 @@ body {
 .navbar {
     display: flex;
     margin-right: 10px;
+    padding-right: 100px;
+    
 }
 
 .logo {
@@ -64,16 +72,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    width:100%;
 
 }
 
 html{
     scroll-behavior: smooth;
+    
 }
 .inicio {
-    height: 60vh !important;
+    height: 50vh !important;
     background: url(https://img.freepik.com/vector-gratis/fondo-azul-clasico-abstracto-forma-geometrica_23-2148424254.jpg?w=996&t=st=1667269800~exp=1667270400~hmac=45e4c604b828d43f3321cc58ab1e8c94bf262fa8cb5e51e5472d35e21dc95add) no-repeat center;
     background-size: cover;
+    
 }
 
 .title {
@@ -122,6 +133,8 @@ p {
     color: #fff;
     text-decoration: none;
     background: #38A3F5;
+    
+    
 }
 
 .btn:hover {
@@ -153,11 +166,14 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
+    
 }
 
 .nosotros {
     padding: 60px;
-    background: #1f1d1d
+    background: #1f1d1d;
+    height: 60vh !important;
     
 }
 
@@ -165,8 +181,7 @@ p {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    text-align: center;
-
+    
 }
 
 .box-container .box {
@@ -177,6 +192,7 @@ p {
     border-radius: 1rem;
     box-shadow: 0 .3rem 5rem rgba(0, 0 , 0, .5);
     margin: 2rem;   
+   
 }
 
 .box-container .box i {
@@ -201,11 +217,13 @@ p {
 .box-container .box p {
     padding: 0 15px;
     font-size: 16px;
+
 }
 
 .servicio {
     background: #171717;
     padding: 60px;
+    height: 60vh !important;
 }
 
 section[id] {
@@ -213,11 +231,13 @@ scroll-margin-top: 90px;
 }
 
 .cliente {
+	height: 60vh !important;
     background: url(https://img.freepik.com/vector-gratis/fondo-azul-clasico-abstracto-forma-geometrica_23-2148424254.jpg?w=996&t=st=1667269800~exp=1667270400~hmac=45e4c604b828d43f3321cc58ab1e8c94bf262fa8cb5e51e5472d35e21dc95add) no-repeat center;
     background-attachment: fixed;
     padding:60px;
     background-size: cover;
     text-align: center;
+    
 }
 
 .slider{
@@ -255,6 +275,7 @@ list-style: none;
     padding-top: 60px;
     background: #171717;
     padding-bottom: 0;
+    height: 60vh !important;
 }
 
 
@@ -265,7 +286,7 @@ list-style: none;
         font-size: 40px;
     }
 
-    .sau {
+    .nosotros {
         height: 100vh;
     }
 
@@ -275,3 +296,5 @@ list-style: none;
    
     
 }
+
+
