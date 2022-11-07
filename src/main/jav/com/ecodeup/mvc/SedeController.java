@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.DAOFactory;
 import entities.Sede;
-
+import entities.Session;
 import interfaces.SedeInterface;
 
 import interfaces.UsuarioInterface;
@@ -61,7 +61,8 @@ public class SedeController {
 		
 		listado = sedeInt.listado(obj);
 		model.addAttribute("Solicitud",listado);
-
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "listadoSede";
 	}
 	
@@ -96,6 +97,8 @@ public class SedeController {
 	
 	@RequestMapping(value="/registrar",method=RequestMethod.GET)
 	public String registrar(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "registrarSede";
 	}
 	

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,14 +16,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import dao.DAOFactory;
 import entities.CortesMantenimiento;
+import entities.Session;
 import interfaces.CortesMantenimientoInterface;
+import interfaces.UsuarioInterface;
 
 @Controller
 @RequestMapping("/cortes")
 public class CortesMantenimientoController {
 	
 	CortesMantenimientoInterface corManInt;
-	
+	DAOFactory daoFactory2=DAOFactory.getDAOFactory(DAOFactory.MYSQL8);
+	UsuarioInterface usuInt=daoFactory2.getUsuarioInterface();
 	
 	public CortesMantenimientoController() {
 		DAOFactory daoFactory=DAOFactory.getDAOFactory(DAOFactory.MYSQL8);	
@@ -40,11 +44,15 @@ public class CortesMantenimientoController {
 		
 		model.addAttribute("name", name);
 		model.addAttribute("cortes", cortes);
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "listarCortesMantenimiento";
 	}
 	
 	@RequestMapping(value="/crear", method=RequestMethod.GET)
-	public String mostrarcreateCortesMantenimiento() {
+	public String mostrarcreateCortesMantenimiento(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "registraCortesMantenimiento";
 	}
 	
@@ -74,6 +82,8 @@ public class CortesMantenimientoController {
 		CortesMantenimiento cortes = corManInt.getCorteById(id); 
 		model.addAttribute("cortes", cortes);
 		System.out.println(cortes);
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "actualizarCortesMantenimiento";
 	}
 	@RequestMapping(value="/editar/{id}", method=RequestMethod.POST)

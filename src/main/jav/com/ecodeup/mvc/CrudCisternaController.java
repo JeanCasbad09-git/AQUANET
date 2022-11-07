@@ -17,10 +17,13 @@ import dao.DAOFactory;
 import entities.AsignacionCisterna;
 import entities.Cargos;
 import entities.Cisterna;
+import entities.Session;
 import entities.Trabajador;
 import interfaces.AsignacionCisternaInterfaces;
 import interfaces.CocheCisternaInterfaces;
+import interfaces.Solicitud_ServicioInterface;
 import interfaces.TrabajadorInterfaces;
+import interfaces.UsuarioInterface;
 import interfaces.UtilidadesInterfaces;
 
 @Controller
@@ -34,10 +37,13 @@ public class CrudCisternaController {
 	TrabajadorInterfaces trabajadorInterfaces = daoFactory.getTrabajadorInterfaces();
 	
 	CocheCisternaInterfaces cisternaInterfaces = daoFactory.getCisternaInterfaces();
-	
+	UsuarioInterface usuInt=daoFactory.getUsuarioInterface();
+	Solicitud_ServicioInterface solSerInt = daoFactory.getSolicitud_ServicioInterface();
 	
 	@RequestMapping(value="/CrudCisterna",method=RequestMethod.GET)
 	public String verCRUDCisterna(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		String query="";
 		List<Cisterna> listcisterna = cisternaInterfaces.cboCisterna(query);
 		System.out.println(listcisterna);
@@ -79,6 +85,8 @@ public class CrudCisternaController {
 
 	@RequestMapping(value="/ListaAsgCisterna",method=RequestMethod.GET)
 	public String verListaAsgCisterna(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		String query="";
 		List<AsignacionCisterna> listAsgCisterna = asignacion.listado(query);
 		System.out.println(listAsgCisterna);

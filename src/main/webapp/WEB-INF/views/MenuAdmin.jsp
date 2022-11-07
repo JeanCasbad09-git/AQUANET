@@ -69,7 +69,7 @@
                   	</li>
                   	
                   	<li style="list-style:none;display:none;" id="menuAtecClie2">
-                  		<a href="http://localhost:8080/AQUANET/cortes/index" class="nav_link"> 
+                  		<a href="http://localhost:8080/AQUANET/cortes/listado" class="nav_link"> 
                   		<span class="nav_name">Cortes</span> </a> 
                   	</li>
                   	

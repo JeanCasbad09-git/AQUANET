@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import dao.DAOFactory;
 import entities.Reclamos;
+import entities.Session;
 import interfaces.ReclamosInterface;
+import interfaces.UsuarioInterface;
 
 @Controller
 @RequestMapping("/reclamos")
 public class ReclamosController {
 	ReclamosInterface reInt;
-	
+	DAOFactory daoFactorya=DAOFactory.getDAOFactory(DAOFactory.MYSQL8);
+	UsuarioInterface usuInt=daoFactorya.getUsuarioInterface();
 	public ReclamosController() {
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL8);
 		this.reInt = daoFactory.getReclamosInterface();
@@ -33,11 +36,15 @@ public class ReclamosController {
 		List<Reclamos> reclamos = reInt.listReclamos(query);	
 		System.out.println(reclamos);
 		model.addAttribute("reclamos", reclamos);
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "listadoReclamos";
 	}
 	
 	@RequestMapping(value="/crear", method=RequestMethod.GET)
 	public String mostrarCreateReclamos(Model model, @RequestParam(required = false) String errorMessage) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		model.addAttribute("message", errorMessage);
 		return "registraReclamos";
 	}
@@ -57,6 +64,8 @@ public class ReclamosController {
 	public String mostrarVisualizarReclamo(@PathVariable("id") int id, Model model) {
 		Reclamos reclamos = reInt.getReclamosById(id); 
 		model.addAttribute("reclamos", reclamos);
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "visualizarReclamos";
 	}
 

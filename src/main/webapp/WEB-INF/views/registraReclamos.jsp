@@ -11,6 +11,14 @@
 <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script></head>
+<%
+String tipo =(String)request.getAttribute("Tipo");
+if(tipo.trim().equals("ADM")){  
+%>
+	<%@ include file = "MenuAdmin.jsp" %>
+	<%}else{ %>
+	<%@ include file = "MenuCliente.jsp" %>
+	<%} %>
 <body style="background-color: #f0f8ff">
 	<div class="container">
                     <br>
