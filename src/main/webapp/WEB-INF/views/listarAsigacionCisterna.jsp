@@ -63,8 +63,8 @@ if(tipo.trim().equals("ADM")){
                      <td><%=cis.getVC_PARADA_2() %></td>
                      <td><%=cis.getVC_PARADA_3() %></td>
                  
-                    <td ><input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+cis.getIN_ID_ASIG_CISTERNA() +"');" %> style='color:white; font-weight: bold;'></td>
-                    <td ><input type="button" class="btn btn-warning btn-sm" value="ACTUALIZAR" onclick=<%="actualizar('"+cis.getIN_ID_ASIG_CISTERNA() +"');" %> style='color:white; font-weight: bold;'></td>
+                    <td><input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick=<%="eliminar('"+cis.getIN_ID_ASIG_CISTERNA() +"');" %> style='color:white; font-weight: bold;'></td>
+                    <td><input type="button" class="btn btn-warning btn-sm" value="ACTUALIZAR"   onclick=<%="actualizar('"+cis.getIN_ID_ASIG_CISTERNA() +"');" %>  style='color:white; font-weight: bold'></td>
                     </tr>
                 <%} %>
                 </tbody>
@@ -76,4 +76,35 @@ if(tipo.trim().equals("ADM")){
         </div>
         
 </body>
+<script type="text/javascript">
+async function eliminar(pCodCis){
+	const alertResponse = await Swal.fire({position: 'center',
+		  title: "ELIMINAR Asignacion?",
+		  showDenyButton: true,
+		  confirmButtonText: 'SI',
+		  denyButtonText: 'NO',
+	});
+	
+	if (alertResponse.isConfirmed) {
+		const response = await fetch('/AQUANET/cisterna/eliminarCisterna/' + pCodCis);
+		if (response.ok) {
+			const { isConfirmed } = await Swal.fire({
+        		position: 'center',
+        		icon: 'success',
+      		  	title: "ELIMINACION EXITOSA",
+      		  	showDenyButton: false,
+      		  	confirmButtonText: 'OK'
+      	
+      		});
+			if (isConfirmed) location.href="/AQUANET/cisterna/ListaAsgCisterna";
+		} else {
+			alertaErrorPersonalizada("ERROR");
+		}
+	}
+}
+function actualizar(cod_cisterna){
+    window.location.href = 'http://localhost:8080/AQUANET/cisterna/cisternaActualizar?parametros='+cod_cisterna;
+}
+
+</script>
 </html>

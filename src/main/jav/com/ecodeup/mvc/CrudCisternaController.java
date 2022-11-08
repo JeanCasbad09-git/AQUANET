@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,7 +56,7 @@ public class CrudCisternaController {
 		List<Trabajador> listAguatero = trabajadorInterfaces.ListarAguateros(query);
 		System.out.println(listAguatero);
 		model.addAttribute("listAguatero", listAguatero);
-		return "CrudCisterna";
+		return "RegistrarCisterna";
 	}
 	
 	@RequestMapping(value="/AsigneCisterna",method=RequestMethod.POST)
@@ -93,4 +95,52 @@ public class CrudCisternaController {
 		model.addAttribute("listAsgCisterna", listAsgCisterna);
 		return "listarAsigacionCisterna";
 	}
+	@RequestMapping(value="/cisternaActualizar", method=RequestMethod.GET)
+	public String mostrarEditarCortes(String parametros, Model model) {
+		AsignacionCisterna asg = asignacion.BuscarID(Integer.parseInt(parametros)); 
+		String query="";
+		model.addAttribute("asignacion", asg);
+		System.out.println(asg);
+		List<Cisterna> listcisterna = cisternaInterfaces.cboCisterna(query);
+		System.out.println(listcisterna);
+		model.addAttribute("listcisterna", listcisterna);
+		List<Trabajador> listChofer = trabajadorInterfaces.ListarChoferes(query);
+		System.out.println(listChofer);
+		model.addAttribute("listChofer", listChofer);
+		List<Trabajador> listAguatero = trabajadorInterfaces.ListarAguateros(query);
+		System.out.println(listAguatero);
+		model.addAttribute("listAguatero", listAguatero);
+		return "ActualizarAsignacionCisterna";
+	}
+	
+	@RequestMapping(value="/actualizarCisterna", method=RequestMethod.POST)
+	@ResponseBody
+	public String EditCortesMantenimiento(int id_asg_cisterna,String parada1,String parada2,String parada3,String fecha,int id_chofer,int id_aguatero,int id_cisterna,ModelMap model) {
+		String resultado ="";
+		int asg = -1;
+		AsignacionCisterna newAsig = new AsignacionCisterna();
+		newAsig.setIN_ID_ASIG_CISTERNA(id_asg_cisterna);
+		newAsig.setIN_ID_CISTERNA(id_cisterna);
+		newAsig.setIN_ID_CHOFER(id_chofer);
+		newAsig.setIN_ID_AGUATERO(id_aguatero);
+		newAsig.setDT_FEC_ASIGNADO(fecha);
+		newAsig.setVC_PARADA_1(parada1);
+		newAsig.setVC_PARADA_2(parada2);
+		newAsig.setVC_PARADA_3(parada3);
+		
+		asg = asignacion.actualizarAsignacionCisterna(newAsig);
+		
+		if(asg == 1) {
+			resultado = "ERROR AL ACTUALIZAR";
+		}else {
+			resultado = "ACTUALIZACION EXITOSA";
+		}
+		return resultado;
+	}
+
+	@RequestMapping(value="/eliminarCisterna/{id}", method=RequestMethod.GET)
+	 public String deleteCortesMantenimiento(@PathVariable("id") int id) {
+        asignacion.eliminarAsignacionCisterna(id);      
+        return "redirect:/cisterna/ListaAsgCisterna";
+    }
 }
