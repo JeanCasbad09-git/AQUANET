@@ -43,7 +43,7 @@ public class CrudCisternaController {
 	Solicitud_ServicioInterface solSerInt = daoFactory.getSolicitud_ServicioInterface();
 	
 	@RequestMapping(value="/CrudCisterna",method=RequestMethod.GET)
-	public String verCRUDCisterna(ModelMap model) {
+	public String verRegistraCisterna(ModelMap model) {
 		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
 		model.addAttribute("Tipo",tipo);
 		String query="";
@@ -61,7 +61,7 @@ public class CrudCisternaController {
 	
 	@RequestMapping(value="/AsigneCisterna",method=RequestMethod.POST)
 	@ResponseBody
-	public String registrarDolar(String parada1,String parada2,String parada3,String fecha,int id_chofer,int id_aguatero,int id_cisterna,ModelMap model) {
+	public String registrarCisterna(String parada1,String parada2,String parada3,String fecha,int id_chofer,int id_aguatero,int id_cisterna,ModelMap model) {
 		
 		
 		String resultado = "";
@@ -96,7 +96,7 @@ public class CrudCisternaController {
 		return "listarAsigacionCisterna";
 	}
 	@RequestMapping(value="/cisternaActualizar", method=RequestMethod.GET)
-	public String mostrarEditarCortes(String parametros, Model model) {
+	public String ActualizarCisterna(String parametros, Model model) {
 		AsignacionCisterna asg = asignacion.BuscarID(Integer.parseInt(parametros)); 
 		String query="";
 		model.addAttribute("asignacion", asg);
@@ -115,7 +115,7 @@ public class CrudCisternaController {
 	
 	@RequestMapping(value="/actualizarCisterna", method=RequestMethod.POST)
 	@ResponseBody
-	public String EditCortesMantenimiento(int id_asg_cisterna,String parada1,String parada2,String parada3,String fecha,int id_chofer,int id_aguatero,int id_cisterna,ModelMap model) {
+	public String editarAsgCisterna(int id_asg_cisterna,String parada1,String parada2,String parada3,String fecha,int id_chofer,int id_aguatero,int id_cisterna,ModelMap model) {
 		String resultado ="";
 		int asg = -1;
 		AsignacionCisterna newAsig = new AsignacionCisterna();
@@ -139,7 +139,7 @@ public class CrudCisternaController {
 	}
 
 	@RequestMapping(value="/eliminarCisterna/{id}", method=RequestMethod.GET)
-	 public String deleteCortesMantenimiento(@PathVariable("id") int id) {
+	 public String EliminarAsgCisterna(@PathVariable("id") int id) {
         asignacion.eliminarAsignacionCisterna(id);      
         return "redirect:/cisterna/ListaAsgCisterna";
     }

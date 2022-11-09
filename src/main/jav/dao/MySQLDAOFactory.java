@@ -1,8 +1,10 @@
 package dao;
 
 import interfaces.AsignacionCisternaInterfaces;
+import interfaces.BoletaInterfaces;
 import interfaces.CocheCisternaInterfaces;
 import interfaces.CortesMantenimientoInterface;
+import interfaces.MedidorInterfaces;
 import interfaces.PersonaInterface;
 import interfaces.ReclamosInterface;
 import interfaces.SedeInterface;
@@ -69,6 +71,17 @@ public class MySQLDAOFactory extends DAOFactory{
 	public SedeInterface getSedeInterface() {
 		return new SedeDAO();
 	}
+	
+	@Override
+	public BoletaInterfaces getBoletaInterface() {
+		// TODO Auto-generated method stub
+		return new BoletaDAO();
+	}
 
+	@Override
+	public MedidorInterfaces getMedidorInterfaces() {
+		// TODO Auto-generated method stub
+		return new MedidorDAO();
+	}
 
 }

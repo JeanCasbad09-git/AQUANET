@@ -1,8 +1,10 @@
 package dao;
 
 import interfaces.AsignacionCisternaInterfaces;
+import interfaces.BoletaInterfaces;
 import interfaces.CocheCisternaInterfaces;
 import interfaces.CortesMantenimientoInterface;
+import interfaces.MedidorInterfaces;
 import interfaces.PersonaInterface;
 import interfaces.ReclamosInterface;
 import interfaces.SedeInterface;
@@ -30,6 +32,8 @@ public abstract class DAOFactory {
 	public abstract TrabajadorInterfaces getTrabajadorInterfaces();
 	public abstract CocheCisternaInterfaces getCisternaInterfaces();
 	public abstract SedeInterface getSedeInterface();
+	public abstract BoletaInterfaces getBoletaInterface();
+	public abstract MedidorInterfaces getMedidorInterfaces();
 	//MÉTODO QUE GENERA LOS GET DE LAS BD
 	public static DAOFactory getDAOFactory(int db) {
 		switch(db) {
