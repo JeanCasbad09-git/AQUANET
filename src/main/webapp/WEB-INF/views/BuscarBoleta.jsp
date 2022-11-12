@@ -21,15 +21,26 @@
         <form>
             
             <div class="form-group row">
-                <label class="col-sm-2  col-form-label ">INGRESE DNI  :</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="txtDNI" style="width: 300px;">
+                <label class="col-sm-3  col-form-label ">BUSCAR X DNI  :</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="txtDNI" style="width: 300px;" maxlength="8">
             </div>
-              <div class="col-sm-10">
+              <div class="col-sm-8">
             <button class="btn btn-dark" type="button" onclick="BuscarDNI();">Buscar</button>
                </div>
             </div>
             <br>
+            <br>
+            <div class="form-group row">
+                <label class="col-sm-3  col-form-label ">BUSCAR X CODIGO MEDIDOR:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="txtCodMed" style="width: 300px;" maxlength="8">
+            </div>
+              <div class="col-sm-8">
+            <button class="btn btn-dark" type="button" onclick="BuscarXmedidor();">Buscar</button>
+               </div>
+            </div>
+            
       
                 </form>
 
@@ -40,25 +51,60 @@
 function BuscarDNI(){ 
 	var DNI = $("#txtDNI").val().trim();
 
-    		
-    		 $.ajax({
-    		        type: 'POST',
-    		          url: "validarMedidor",
-    		          data: {"DNI":DNI},
-    		          success: function(data){
-    		        	  if(data == "MEDIDOR ENCONTRADO"){
-    		        		location.href='http://localhost:8080/AQUANET/boleta/RegistrarBoleta?parametros='+DNI;
-    		          	  }
-    		          	  else{
-    		          		alertaRegistroMedidor();
-    		          		
-    		          	  }
-    		          },
-    		          error: function(){
-    		        	  alertaErrorPersonalizada("ERROR");
-    		          }
-    		          }); 
-    		
+	if(DNI != "" && DNI!=null){
+		if(DNI.match("[0-9]{8,9}")){
+			$.ajax({
+ 		        type: 'POST',
+ 		          url: "validarMedidorxDNI",
+ 		          data: {"DNI":DNI},
+ 		          success: function(data){
+ 		        	  if(data == "MEDIDOR ENCONTRADO"){
+ 		        		location.href='http://localhost:8080/AQUANET/boleta/RegistrarBoletaxDNI?parametros='+DNI;
+ 		          	  }
+ 		          	  else{
+ 		          		alertaRegistroMedidor();
+ 		          		
+ 		          	  }
+ 		          },
+ 		          error: function(){
+ 		        	  alertaErrorPersonalizada("ERROR");
+ 		          }
+ 		          }); 
+		}else{
+			alertaInfoPersonalizada("Formato de DNI no valido (8 digitos)");
+		}
+	}else{
+		alertaInfoPersonalizada("Ingrese un DNI");
+	}
+    			  		
+}
+
+function BuscarXmedidor(){ 
+	var COD = $("#txtCodMed").val().trim();
+
+	if(COD != "" && COD!=null){
+			$.ajax({
+ 		        type: 'POST',
+ 		          url: "validarMedidorXcod",
+ 		          data: {"COD":COD},
+ 		          success: function(data){
+ 		        	  if(data == "MEDIDOR ENCONTRADO"){
+ 		        		location.href='http://localhost:8080/AQUANET/boleta/RegistrarBoletaxCOD?parametros='+COD;
+ 		          	  }
+ 		          	  else{
+ 		          		alertaErrorPersonalizada(data)
+ 		          		
+ 		          	  }
+ 		          },
+ 		          error: function(){
+ 		        	  alertaErrorPersonalizada("ERROR");
+ 		          }
+ 		          }); 
+		
+	}else{
+		alertaInfoPersonalizada("Ingresa el codigo del Medidor");
+	}
+    			  		
 }
 
 function alertaRegistroMedidor(){
@@ -67,32 +113,54 @@ function alertaRegistroMedidor(){
 	
 	
 	Swal.fire({
-		  title: 'Desea Registrar un Medidor a esta Persona?',
+		  title: 'Persona no cuenta con Medidor',
+		  text:	 'Desea Registrar un Medidor a esta Persona?',
 		  showDenyButton: true,
 		  showCancelButton: true,
 		  confirmButtonText: 'Si',
 		  denyButtonText: 'No',
 		}).then((result) => {
 		  if (result.isConfirmed) {
-			  $.ajax({
-  		        type: 'POST',
-  		          url: "registrarMedidor",
-  		          data: {"DNI":DNI},
-  		          success: function(data){
-  		        	  if(data == "MEDIDOR ENCONTRADO"){
-  		        		alertaSuccesPersonalizada(data);
-  		          	  }
-  		          	  else{
-  		          		alertaErrorPersonalizada(data);
-  		          		
-  		          	  }
-  		          },
-  		          error: function(){
-  		        	  alertaErrorPersonalizada("ERROR");
-  		          }
-  		          }); 
+			  Swal.fire({
+				  title: 'Ingrese Codigo del Medidor',
+				  input: 'text',
+				  showCancelButton: true,
+				  confirmButtonText: 'Registrar',
+				  cancelButtonText: "Cancelar",
+				  inputValidator: codMed => {
+			            // Si el valor es válido, debes regresar undefined. Si no, una cadena
+			            if (!codMed) {
+			                return "Escriba el codigo del Medidor";
+			            } else {
+			                return undefined;
+			            }
+			        }
+			    })
+			    .then(resultado => {
+			        if (resultado.value) {
+			            let codMed = resultado.value;
+			            $.ajax({
+			                type: 'POST',
+			                  url: "registrarMedidor",
+			                  data: {"DNI":DNI,"CodMed":codMed},
+			                  success: function(data){
+			                      if(data == "MEDIDOR REGISTRADO"){
+			                        alertaSuccesPersonalizada(data);
+			                      }
+			                      else{
+			                        alertaErrorPersonalizada(data);
+			                        
+			                      }
+			                  },
+			                  error: function(){
+			                      alertaErrorPersonalizada("ERROR");
+			                  }
+			                  }); 
+			        }
+			    });
+			 
 		  } else if (result.isDenied) {
-		    Swal.fire('Changes are not saved', '', 'info')
+		    Swal.fire('CAMBIOS NO REALIZADOS', '', 'info')
 		  }
 		})
 }

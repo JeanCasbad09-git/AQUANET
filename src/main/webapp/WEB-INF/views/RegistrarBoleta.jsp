@@ -25,7 +25,7 @@
                 Medidor med =(Medidor)request.getAttribute("listMedidor");
                 %>
                 <tr>
-                	<input id="id_asg_cisterna" type="hidden" value=<%=med.getIN_ID_MEDIDOR() %>>
+                	<input id="ID_Medidor" type="hidden" value=<%=med.getVC_ID_MEDIDOR() %>>
                     <td><label class="col-sm-2  col-form-label ">NOMBRE DEL USUARIO :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
                     <td><input type="text" disabled="disabled" value=<%="'"+ med.getPersona().getVC_NOMBRE()+ "'"%> class="form-control" name="txtNomUsuario" id="txtNomUsuario" style="width: 600px;"></td>
                     
@@ -60,7 +60,7 @@
 <script>
 function grabar(){ 
 	var consumo = $("#txtConsumoMes").val().trim();
-	var id_medidor = $("#id_asg_cisterna").val();
+	var id_medidor = $("#ID_Medidor").val();
    
     
     if(consumo != "" && consumo!=null){	
@@ -83,7 +83,7 @@ function grabar(){
     		          }); 
     		
    }else{
-    	alertaInfoPersonalizada("Ingrese la primera parada");
+    	alertaInfoPersonalizada("Ingrese el consumo de este mes");
     }
 }
    

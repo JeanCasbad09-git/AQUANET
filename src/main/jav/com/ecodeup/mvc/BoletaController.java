@@ -31,13 +31,13 @@ public class BoletaController {
 		return "BuscarBoleta";
 	}
 	
-	@RequestMapping(value="/validarMedidor", method=RequestMethod.POST)
+	@RequestMapping(value="/validarMedidorxDNI", method=RequestMethod.POST)
 	@ResponseBody
-	public String validarMedidor(String DNI, Model model) {
+	public String validarMedidorxDNI(String DNI, Model model) {
 		String resultado ="";
 		int medidor = -1;
 		
-		medidor = medidorInterfaces.validarExistenciaMedidor(DNI);
+		medidor = medidorInterfaces.validarExistenciaMedidorxDNI(DNI);
 	
 		if(medidor == 1) {
 			resultado = "MEDIDOR ENCONTRADO";
@@ -47,25 +47,54 @@ public class BoletaController {
 		return resultado;
 	}
 	
-	@RequestMapping(value="/registrarMedidor", method=RequestMethod.POST)
+	@RequestMapping(value="/validarMedidorXcod", method=RequestMethod.POST)
 	@ResponseBody
-	public String RegistrarMedidor(String DNI, Model model) {
+	public String validarMedidorXcod(String COD, Model model) {
 		String resultado ="";
 		int medidor = -1;
 		
-		medidor = medidorInterfaces.registrarMedidor(DNI);
+		medidor = medidorInterfaces.validarExistenciaMedidorxCodigo(COD);
 	
 		if(medidor == 1) {
-			resultado = "MEDIDOR REGISTRADO";
+			resultado = "MEDIDOR ENCONTRADO";
 		}else {
-			resultado = "ERROR: VERIFICAR DNI";
+			resultado = "MEDIDOR NO EXISTE";
 		}
 		return resultado;
 	}
 	
-	@RequestMapping(value="/RegistrarBoleta", method=RequestMethod.GET)
-	public String verRegistroBoleta(String parametros, Model model) {
-		Medidor asg = medidorInterfaces.BuscarID(parametros); 
+	@RequestMapping(value="/registrarMedidor", method=RequestMethod.POST)
+	@ResponseBody
+	public String RegistrarMedidor(String DNI,String CodMed, Model model) {
+		String resultado ="";
+		int DniMedidor = -1;
+		int medidor = -1;
+		
+		DniMedidor = medidorInterfaces.validarExistenciaPersona(DNI);
+		medidor = medidorInterfaces.registrarMedidor(DNI,CodMed);
+	
+		if(DniMedidor == 1) {
+		if(medidor == 1) {
+			resultado = "MEDIDOR REGISTRADO";
+		}else {
+			resultado = "CODIGO YA REGISTRADO";
+		}
+		}else {
+			resultado = "DNI NO ENCONTRADO";
+		}
+		return resultado;
+	}
+	
+	@RequestMapping(value="/RegistrarBoletaxDNI", method=RequestMethod.GET)
+	public String verRegistroBoletaxDNI(String parametros, Model model) {
+		Medidor asg = medidorInterfaces.BuscarIDxDNI(parametros); 
+		model.addAttribute("listMedidor", asg);
+		System.out.println(asg);
+		return "RegistrarBoleta";
+	}
+	@RequestMapping(value="/RegistrarBoletaxCOD", method=RequestMethod.GET)
+	public String verRegistroBoletaxCOD(String parametros, Model model) {
+		Medidor asg = medidorInterfaces.BuscarIDxCodMedidor(parametros); 
 		model.addAttribute("listMedidor", asg);
 		System.out.println(asg);
 		return "RegistrarBoleta";
@@ -73,7 +102,7 @@ public class BoletaController {
 	
 	@RequestMapping(value="/RistroBoleta",method=RequestMethod.POST)
 	@ResponseBody
-	public String registrarBoleta(int id_medidor,Double consumo,ModelMap model) {
+	public String registrarBoleta(String id_medidor,Double consumo,ModelMap model) {
 		String resultado = "";
 		int resulBol = -1;
 	

@@ -14,7 +14,7 @@ import interfaces.MedidorInterfaces;
 public class MedidorDAO implements MedidorInterfaces{
 
 	@Override
-	public int registrarMedidor(String obj) {
+	public int registrarMedidor(String DNI,String Cod_Medidor) {
 		int resultado=-1;
 		Conexion conexion = new Conexion();
 		Connection cn = null;
@@ -24,9 +24,10 @@ public class MedidorDAO implements MedidorInterfaces{
 		try {	
 				cn= conexion.conectar();
 				
-				String sql="call SP_REGISTRO_MEDIDOR (?)";
+				String sql="call SP_REGISTRO_MEDIDOR (?,?)";
 				cbsm = cn.prepareCall(sql);
-				cbsm.setString(1, obj);
+				cbsm.setString(1, DNI);
+				cbsm.setString(2, Cod_Medidor);
 				resultado = cbsm.executeUpdate();
 				
 			
@@ -47,7 +48,7 @@ public class MedidorDAO implements MedidorInterfaces{
 	}
 
 	@Override
-	public int validarExistenciaMedidor(String DNI) {
+	public int validarExistenciaMedidorxDNI(String DNI) {
 		int resultado=-1;
 		Conexion conexion = new Conexion();
 		Connection cn = null;
@@ -55,9 +56,40 @@ public class MedidorDAO implements MedidorInterfaces{
 		ResultSet rs=null;
 	try {
 		cn = conexion.conectar();
-		String sql2 = "SELECT M.IN_ID_MEDIDOR,P.VC_NOMBRE,M.DO_CONSUMO_ACTUAL FROM MEDIDOR M JOIN PERSONA P ON M.IN_ID_PERSONA = P.IN_ID_PERSONA WHERE VC_DNI = ?";
+		String sql2 = "SELECT M.VC_ID_MEDIDOR,P.VC_NOMBRE,M.DO_CONSUMO_ACTUAL FROM MEDIDOR M JOIN PERSONA P ON M.IN_ID_PERSONA = P.IN_ID_PERSONA WHERE VC_DNI = ?";
 		pstm= cn.prepareStatement(sql2);
 		pstm.setString(1, DNI);
+		rs=pstm.executeQuery();
+		while(rs.next()) {
+			resultado = 1;
+
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally {
+		try {
+			if(cn!=null)cn.close();
+			if(pstm!=null)pstm.close();
+			if(rs!=null)rs.close();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+		return resultado;
+	}
+	@Override
+	public int validarExistenciaMedidorxCodigo(String COD) {
+		int resultado=-1;
+		Conexion conexion = new Conexion();
+		Connection cn = null;
+		PreparedStatement pstm=null;
+		ResultSet rs=null;
+	try {
+		cn = conexion.conectar();
+		String sql2 = "SELECT M.VC_ID_MEDIDOR,P.VC_NOMBRE,M.DO_CONSUMO_ACTUAL FROM MEDIDOR M JOIN PERSONA P ON M.IN_ID_PERSONA = P.IN_ID_PERSONA WHERE VC_ID_MEDIDOR = ?";
+		pstm= cn.prepareStatement(sql2);
+		pstm.setString(1, COD);
 		rs=pstm.executeQuery();
 		while(rs.next()) {
 			resultado = 1;
@@ -87,7 +119,7 @@ public class MedidorDAO implements MedidorInterfaces{
 		ResultSet rs=null;
 		try {
 			cn = conexion.conectar();
-			String sql = "SELECT M.IN_ID_MEDIDOR,P.VC_NOMBRE,M.DO_CONSUMO_ACTUAL FROM MEDIDOR M JOIN PERSONA P ON M.IN_ID_PERSONA = P.IN_ID_PERSONA WHERE VC_DNI = ?";
+			String sql = "SELECT M.VC_ID_MEDIDOR,P.VC_NOMBRE,M.DO_CONSUMO_ACTUAL FROM MEDIDOR M JOIN PERSONA P ON M.IN_ID_PERSONA = P.IN_ID_PERSONA WHERE VC_DNI = ?";
 			pstm=cn.prepareStatement(sql);
 			 pstm.setString(1, DNI);
 			 Medidor obj = new Medidor();
@@ -134,7 +166,7 @@ public class MedidorDAO implements MedidorInterfaces{
 	}
 
 	@Override
-	public Medidor BuscarID(String VC_DNI) {
+	public Medidor BuscarIDxDNI(String VC_DNI) {
 		Medidor med = new Medidor();
 		Conexion conexion = new Conexion();
 		Connection cn = null;
@@ -143,7 +175,7 @@ public class MedidorDAO implements MedidorInterfaces{
 		cn = conexion.conectar();
 		try {
 			
-			String sql="SELECT M.IN_ID_MEDIDOR,P.VC_NOMBRE,M.DO_CONSUMO_ACTUAL \r\n"
+			String sql="SELECT M.VC_ID_MEDIDOR,P.VC_NOMBRE,M.DO_CONSUMO_ACTUAL \r\n"
 					+ "FROM MEDIDOR M JOIN PERSONA P ON M.IN_ID_PERSONA = P.IN_ID_PERSONA WHERE VC_DNI = ?";
 			pstm=cn.prepareStatement(sql);
 			 pstm.setString(1, VC_DNI);
@@ -151,7 +183,7 @@ public class MedidorDAO implements MedidorInterfaces{
 			
 			while(rs.next()) {
 				med =new Medidor();
-				med.setIN_ID_MEDIDOR(rs.getInt(1));
+				med.setVC_ID_MEDIDOR(rs.getString(1));
 				med.getPersona().setVC_NOMBRE(rs.getString(2));;
 				med.setDO_CONSUMO_ACTUAL(rs.getDouble(3));
 			}
@@ -168,6 +200,75 @@ public class MedidorDAO implements MedidorInterfaces{
 		}
 		return med;
 	}
+	
+	@Override
+	public Medidor BuscarIDxCodMedidor(String VC_ID_MEDIDOR) {
+		Medidor med = new Medidor();
+		Conexion conexion = new Conexion();
+		Connection cn = null;
+		PreparedStatement pstm=null;
+		ResultSet rs=null;
+		cn = conexion.conectar();
+		try {
+			
+			String sql="SELECT M.VC_ID_MEDIDOR,P.VC_NOMBRE,M.DO_CONSUMO_ACTUAL \r\n"
+					+ "FROM MEDIDOR M JOIN PERSONA P ON M.IN_ID_PERSONA = P.IN_ID_PERSONA WHERE VC_ID_MEDIDOR = ?";
+			pstm=cn.prepareStatement(sql);
+			 pstm.setString(1, VC_ID_MEDIDOR);
+			rs=pstm.executeQuery();
+			
+			while(rs.next()) {
+				med =new Medidor();
+				med.setVC_ID_MEDIDOR(rs.getString(1));
+				med.getPersona().setVC_NOMBRE(rs.getString(2));;
+				med.setDO_CONSUMO_ACTUAL(rs.getDouble(3));
+			}
+		}catch(Exception e) {
+			System.out.println("ERROR EN BUSCAR: "+e.getMessage());
+		}finally {
+			try {
+				if(cn!=null)cn.close();
+				if(pstm!=null)pstm.close();
+				if(rs!=null)rs.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return med;
+	}
+
+	@Override
+	public int validarExistenciaPersona(String DNI) {
+		int resultado=-1;
+		Conexion conexion = new Conexion();
+		Connection cn = null;
+		PreparedStatement pstm=null;
+		ResultSet rs=null;
+	try {
+		cn = conexion.conectar();
+		String sql2 = "select IN_ID_PERSONA FROM PERSONA WHERE VC_DNI = ?";
+		pstm= cn.prepareStatement(sql2);
+		pstm.setString(1, DNI);
+		rs=pstm.executeQuery();
+		while(rs.next()) {
+			resultado = 1;
+
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally {
+		try {
+			if(cn!=null)cn.close();
+			if(pstm!=null)pstm.close();
+			if(rs!=null)rs.close();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+		return resultado;
+	}
+	
 	
 
 }

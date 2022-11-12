@@ -13,7 +13,7 @@ import interfaces.BoletaInterfaces;
 public class BoletaDAO implements BoletaInterfaces {
 
 	@Override
-	public int registrarBoleta(int COD_MEDIDOR, Double MONTO) {
+	public int registrarBoleta(String COD_MEDIDOR, Double MONTO) {
 		int resultado=-1;
 		Conexion conexion = new Conexion();
 		Connection cn = null;
@@ -23,9 +23,9 @@ public class BoletaDAO implements BoletaInterfaces {
 		try {	
 				cn= conexion.conectar();
 				
-				String sql="CALL SP_INSERTAR_BOLETA(?,?);";
+				String sql="CALL SP_INSERTAR_BOLETA(?,?)";
 				cbsm = cn.prepareCall(sql);
-				cbsm.setInt(1, COD_MEDIDOR);
+				cbsm.setString(1, COD_MEDIDOR);
 				cbsm.setDouble(2, MONTO);
 				resultado = cbsm.executeUpdate();
 				

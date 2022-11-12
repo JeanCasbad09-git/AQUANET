@@ -7,7 +7,7 @@ import lombok.Data;
 @Data 
 public class Medidor {
 
-	private int IN_ID_MEDIDOR;
+	private String VC_ID_MEDIDOR;
 	private int IN_ID_PERSONA;
 	private Date DT_FEC_REGISTRO; 
 	private Double DO_CONSUMO_ACTUAL;
