@@ -55,6 +55,10 @@
                   		<a href="http://localhost:8080/AQUANET/sede/sedeAct?parametros=va,va,va" class="nav_link"> 
                   		<span class="nav_name">Sedes</span> </a> 
                   	</li>
+                  	<li style="list-style:none;display:none;" id="menuMantenimiento4">
+                  		<a href="http://localhost:8080/AQUANET/boleta/BuscarBoleta" class="nav_link"> 
+                  		<span class="nav_name">Buscar Boleta</span> </a> 
+                  	</li>
                   </ul>
                   </li>
                   
@@ -73,6 +77,17 @@
                   		<span class="nav_name">Cortes</span> </a> 
                   	</li>
                   	
+                  	<li style="list-style:none;display:none;" id="menuAtecClie3">
+                  		<a href="http://localhost:8080/AQUANET/boleta/ListaBoletaUsuario" class="nav_link"> 
+                  		<span class="nav_name">Boletas Pendientes</span> </a> 
+                  	</li>
+                  	
+                  	<li style="list-style:none;display:none;" id="menuAtecClie4">
+                  		<a href="http://localhost:8080/AQUANET/boleta/ListaBoletaADM class="nav_link"> 
+                  		<span class="nav_name">Boletas</span> </a> 
+                  	</li>
+                  
+                  	 
                   </ul>
                   </li>
                   
@@ -136,6 +151,8 @@
 	    	if(clase=="menuAtecClie"){
 	    		document.getElementById("menuAtecClie1").style.display='';
 	    		document.getElementById("menuAtecClie2").style.display='';
+	    		document.getElementById("menuAtecClie3").style.display='';
+	    		document.getElementById("menuAtecClie4").style.display='';
 	    		
 	    		document.getElementById("menuMantenimiento1").style.display='none';
 	    		document.getElementById("menuMantenimiento2").style.display='none';
@@ -145,9 +162,11 @@
 	    		document.getElementById("menuMantenimiento1").style.display='';
 	    		document.getElementById("menuMantenimiento2").style.display='';
 	    		document.getElementById("menuMantenimiento3").style.display='';
+	    		document.getElementById("menuMantenimiento4").style.display='';
 	    		
 	    		document.getElementById("menuAtecClie1").style.display='none';
 	    		document.getElementById("menuAtecClie2").style.display='none';
+	    		
 	    		
 	    	}
     } 

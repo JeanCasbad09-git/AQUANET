@@ -3,6 +3,8 @@ package com.ecodeup.mvc;
 
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -11,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.DAOFactory;
+import entities.AsignacionCisterna;
+import entities.Boleta;
 import entities.Medidor;
+import entities.Session;
 import interfaces.BoletaInterfaces;
 import interfaces.MedidorInterfaces;
+import interfaces.UsuarioInterface;
 
 @Controller
 @RequestMapping("/boleta")
@@ -23,11 +29,15 @@ public class BoletaController {
 	
 	BoletaInterfaces boletaInterfaces = daoFactory.getBoletaInterface();
 	
+	UsuarioInterface usuInt=daoFactory.getUsuarioInterface();
+	
 	MedidorInterfaces medidorInterfaces = daoFactory.getMedidorInterfaces();
 	
 	
 	@RequestMapping(value="/BuscarBoleta",method=RequestMethod.GET)
 	public String verLogin(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
 		return "BuscarBoleta";
 	}
 	
@@ -114,6 +124,72 @@ public class BoletaController {
 		}
 		return resultado;
 	}
+	
+	@RequestMapping(value="/ListaBoletaUsuario",method=RequestMethod.GET)
+	public String verListaBoletaxUsuario(ModelMap model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
+		int codigo = usuInt.obtenerIdUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		String query="";
+		List<Boleta> listBolUsuario = boletaInterfaces.listadoxUsuario(codigo,query);
+		System.out.println(listBolUsuario);
+		model.addAttribute("listBolUsuario", listBolUsuario);
+		return "ListarBoletaXusuario";
+	}
+	
+	@RequestMapping(value="/ListaBoletaADM", method=RequestMethod.GET)
+	public String verListaBoletasADM(Model model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
+		String query="";
+		List<Boleta> listBolUsuario = boletaInterfaces.listado(query);
+		model.addAttribute("listBolUsuario", listBolUsuario);
+		System.out.println(listBolUsuario);
+		return "ListarBoletaADM";
+	}
+	@RequestMapping(value="/ListaBoletaDNI", method=RequestMethod.GET)
+	public String verListaBoletasDNI_ADM(String parametros, Model model) {
+		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
+		model.addAttribute("Tipo",tipo);
+		String query="";
+		List<Boleta> listBolUsuario = boletaInterfaces.listadoxDNI(parametros,query);
+		model.addAttribute("listBolUsuario", listBolUsuario);
+		System.out.println(listBolUsuario);
+		return "ListarBoletaADM";
+	}
+	
+	@RequestMapping(value="/pagarBoleta", method=RequestMethod.POST)
+	@ResponseBody
+	public String pagarBoleta(int ID_BOLETA,ModelMap model) {
+		String resultado ="";
+		int bol = -1;
+
+		bol = boletaInterfaces.actualizarPagoBoleta(ID_BOLETA);
+		
+		if(bol == 1) {
+			resultado = "PAGO EXITOSO";
+		}else {
+			resultado = "ERROR AL PAGAR";
+		}
+		return resultado;
+	}
+	
+	@RequestMapping(value="/EliminarBoleta", method=RequestMethod.POST)
+	@ResponseBody
+	public String eliminarBoleta(int ID_BOLETA,ModelMap model) {
+		String resultado ="";
+		int bol = -1;
+
+		bol = boletaInterfaces.eliminarBoleta(ID_BOLETA);
+		
+		if(bol == 1) {
+			resultado = "ELIMINACION EXITOSA";
+		}else {
+			resultado = "ERROR AL ELIMINAR";
+		}
+		return resultado;
+	}
+
 
 	
 }
