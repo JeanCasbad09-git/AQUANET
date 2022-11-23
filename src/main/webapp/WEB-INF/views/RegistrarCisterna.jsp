@@ -117,13 +117,7 @@ if(tipo.trim().equals("ADM")){
                 </form>
 
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+   
 </body>
 
 <script>

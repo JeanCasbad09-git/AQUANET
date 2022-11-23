@@ -35,7 +35,7 @@ public class BoletaController {
 	
 	
 	@RequestMapping(value="/BuscarBoleta",method=RequestMethod.GET)
-	public String verLogin(ModelMap model) {
+	public String verBuscarBoleta(ModelMap model) {
 		String tipo = usuInt.obtenerTipoUsuarioXUser(Session.getCurrentInstance().getLoggedUser());
 		model.addAttribute("Tipo",tipo);
 		return "BuscarBoleta";

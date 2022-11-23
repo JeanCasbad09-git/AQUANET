@@ -83,8 +83,8 @@
                   	</li>
                   	
                   	<li style="list-style:none;display:none;" id="menuAtecClie4">
-                  		<a href="http://localhost:8080/AQUANET/boleta/ListaBoletaADM class="nav_link"> 
-                  		<span class="nav_name">Boletas</span> </a> 
+                  		<a href="http://localhost:8080/AQUANET/boleta/ListaBoletaADM" class="nav_link"> 
+                  		<span class="nav_name">Todas las Boletas</span> </a> 
                   	</li>
                   
                   	 
@@ -166,6 +166,7 @@
 	    		
 	    		document.getElementById("menuAtecClie1").style.display='none';
 	    		document.getElementById("menuAtecClie2").style.display='none';
+	    		
 	    		
 	    		
 	    	}
